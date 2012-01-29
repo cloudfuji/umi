@@ -36,7 +36,7 @@ group :test do
 end
 gem "devise"
 gem "devise_bushido_authenticatable", :git => "https://github.com/Bushido/devise_cas_authenticatable.git"
-gem "bushido", :path => "../bushidogem"
+gem "bushido", :git => "https://github.com/Bushido/bushidogem.git"
 gem "tane", :group => "development", :git => "https://github.com/Bushido/tane.git"
 gem "rspec-rails", :group => "development"
 gem "factory_girl_rails", :group => "development"
