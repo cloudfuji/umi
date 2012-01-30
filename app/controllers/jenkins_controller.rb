@@ -1,8 +1,10 @@
 class JenkinsController < ApplicationController
   def notification
+    puts params.inspect
+
     event = {}
     event[:category] = "build"
-    event[:data]     = params[:build]
+    event[:data]     = params[:build] || {}
     event[:data][:name] = params[:name]
 
     
