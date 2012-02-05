@@ -17,6 +17,8 @@ class JenkinsController < ApplicationController
 
     puts event.inspect
 
+    event[:data][:human] = "Build #{params[:name]} has #{event[:name]}"
+
     Bushido::Event.publish(event)
 
     render :json => "OK"

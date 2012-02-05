@@ -1,6 +1,10 @@
 class GithubsController < ApplicationController
   def received
-    payload = params[:payload].symbolize_keys
+    puts params.inspect
+    payload = params[:payload]
+    puts payload.inspect
+    payload = Bushido::Utils.normalize_keys(JSON(payload)) if payload.is_a?(String)
+    puts payload.inspect
 
     event = {}
     event[:category] = "git"
