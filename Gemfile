@@ -2,11 +2,16 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.1.3'
 
-# Bundle edge Rails instead:
-# gem 'rails',     :git => 'git://github.com/rails/rails.git'
-
+# db-gems
 gem 'sqlite3'
 
+# Bushido gems
+gem "devise"
+gem "devise_bushido_authenticatable"
+gem "bushido"
+
+# Error handling
+gem 'airbrake'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -18,26 +23,12 @@ end
 
 gem 'jquery-rails'
 
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# Use unicorn as the web server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
-
 group :test do
   # Pretty printed test output
   gem 'turn', '0.8.2', :require => false
 end
-gem "devise"
-gem "devise_bushido_authenticatable", :git => "https://github.com/Bushido/devise_cas_authenticatable.git"
-gem "bushido", :git => "https://github.com/Bushido/bushidogem.git"
-gem "tane", :group => "development", :git => "https://github.com/Bushido/tane.git"
+
+gem "tane", :group => "development"
 gem "rspec-rails", :group => "development"
 gem "factory_girl_rails", :group => "development"
 gem "awesome_print", :group => "development"
