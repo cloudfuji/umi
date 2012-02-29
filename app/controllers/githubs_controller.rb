@@ -26,6 +26,10 @@ class GithubsController < ApplicationController
 
     Bushido::Event.publish(event)
 
+    User.all.collect do |user|
+      Bushido::User.notify(user.ido_id, "Git Received", event[:data][:human], "development")
+    end
+
     render :json => "OK"
   end
 end
