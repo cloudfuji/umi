@@ -30,5 +30,4 @@ end
 
 gem "tane", :group => "development"
 gem "rspec-rails", :group => "development"
-gem "factory_girl_rails", :group => "development"
 gem "awesome_print", :group => "development"
