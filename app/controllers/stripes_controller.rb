@@ -44,7 +44,7 @@ class StripesController < ApplicationController
     {
       :category => category,
       :name => name,
-      :data => charge.merge(:data => {:human => human})
+      :data => charge.merge({:human => human})
     }
   end
 
@@ -59,7 +59,7 @@ class StripesController < ApplicationController
     {
       :category => category,
       :name => name,
-      :data => coupon.merge(:data => {:human => human})
+      :data => coupon.merge({:human => human})
     }
   end
 
@@ -75,7 +75,7 @@ class StripesController < ApplicationController
     {
       :category => category,
       :name => name,
-      :data => customer.merge(:data => {:human => human})
+      :data => customer.merge({:human => human})
     }
   end
 
@@ -92,7 +92,7 @@ class StripesController < ApplicationController
     {
       :category => category,
       :name     => name,
-      :data     => customer_discount.merge(:data => {:human => human})
+      :data     => customer_discount.merge({:human => human})
     }
   end
 
@@ -110,7 +110,7 @@ class StripesController < ApplicationController
     {
       :category => category,
       :name     => name,
-      :data     => subscription.merge(:data => {:human => human})
+      :data     => subscription.merge({:human => human})
     }
   end
 
@@ -128,7 +128,7 @@ class StripesController < ApplicationController
     {
       :category => category,
       :name     => name,
-      :data     => invoice.merge(:data => {:human => human})
+      :data     => invoice.merge({:human => human})
     }
   end
 
@@ -145,7 +145,7 @@ class StripesController < ApplicationController
     {
       :category => category,
       :name     => name,
-      :data     => item.merge(:data => {:human => human})
+      :data     => item.merge({:human => human})
     }
   end
 
@@ -162,7 +162,7 @@ class StripesController < ApplicationController
     {
       :category => category,
       :name => name,
-      :data => plan.merge(:data => {:human => human})
+      :data => plan.merge({:human => human})
     }
   end
 end
