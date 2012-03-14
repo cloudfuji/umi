@@ -12,4 +12,5 @@ Umi::Application.routes.draw do
 
   resource(:jenkins) { post :notification }
   resource(:github ) { post :received     }
+  resource(:stripe ) { post :received     }
 end

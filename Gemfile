@@ -10,6 +10,9 @@ gem "devise"
 gem "devise_bushido_authenticatable"
 gem "bushido"
 
+# External integrations
+gem 'stripe'
+
 # Error handling
 gem 'airbrake'
 
