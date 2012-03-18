@@ -1,0 +1,8 @@
+# Mongoid Configuration for MongoHQ on Bushido
+# ============================================
+
+development:
+  uri: <%= ENV['MONGODB_URL'] %>
+
+production:
+  uri: <%= ENV['MONGODB_URL'] %>

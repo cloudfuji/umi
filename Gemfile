@@ -2,16 +2,25 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.1.3'
 
-# db-gems
-gem 'sqlite3'
+# Mongo gems
+gem 'mongoid', '~> 2.2.2'
+gem 'mongoid_rails_migrations'
+
+platform :ruby do
+  gem 'mongo', '= 1.3.1'
+  gem 'bson', '= 1.3.1'
+  gem 'bson_ext', '= 1.3.1'
+end
 
 # Bushido gems
 gem "devise"
 gem "devise_bushido_authenticatable"
 gem "bushido"
+gem "uuid"
 
 # External integrations
 gem 'stripe'
+gem 'pivotal-tracker'
 
 # Error handling
 gem 'airbrake'

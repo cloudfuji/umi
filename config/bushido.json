@@ -1,0 +1,5 @@
+{
+  "sql": false,
+  "mongodb": true,
+  "project_name": "sade"
+}
