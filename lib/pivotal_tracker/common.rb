@@ -7,7 +7,7 @@ module Pivotal
     def announce!
       klass    = self.class.name.split(":").last.downcase
 
-      category = "project_#{self.ido_schema_class}"
+      category = self.ido_schema_class
       name     = "created"
       data     = self.to_bushido
 
