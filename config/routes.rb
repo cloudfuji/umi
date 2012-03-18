@@ -10,7 +10,8 @@ end
 Umi::Application.routes.draw do
   devise_for :users
 
-  resource(:jenkins) { post :notification }
-  resource(:github ) { post :received     }
-  resource(:stripe ) { post :received     }
+  resource(:jenkins ) { post :notification }
+  resource(:pivotal ) { post :received     }
+  resource(:github  ) { post :received     }
+  resource(:stripe  ) { post :received     }
 end
