@@ -5,7 +5,7 @@ class BushidoUserHooks < Bushido::EventObserver
     puts "Setting username to: #{params['data'].try(:[], 'ido_id')}"
 
     user = User.new(:email => params['data'].try(:[], 'email'))
-    user.name = user.email.split('@').first
+    user.first_name, user.last_name = user.email.split('@')
     user.send("#{::Devise.cas_username_column}=".to_sym, params['data'].try(:[], 'ido_id'))
     user.save
   end
