@@ -13,7 +13,7 @@ module Pivotal
 
       human = {
         "project" => Proc.new { |project| "Project #{project.name} created from Pivotal Tracker" },
-        "story"   => Proc.new { |story|   "#{story.story_type.titleize} task '#{story.name}' created from Pivotal: #{story.description} requested by #{story.requested_by} due by #{story.deadline}" },
+        "story"   => Proc.new { |story|   "#{story.story_type.titleize} task '#{story.name}' created from Pivotal: #{story.description} requested by #{User.first(:conditions => {:ido_id => story.requested_by}).full_name} due by #{story.deadline}" },
         "note"    => Proc.new { |note|    "Project task note created from Pivotal: #{note.text}" }
       }[klass].call(self)
 

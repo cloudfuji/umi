@@ -31,6 +31,10 @@ class User
     User.first(:conditions => {:first_name => name.split(" ").first, :last_name => name.split(" ").last}) if name
   end
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
   def bushido_extra_attributes(extra_attributes)
     self.first_name = extra_attributes["first_name"].to_s
     self.last_name  = extra_attributes["last_name"].to_s

@@ -32,7 +32,7 @@ class PivotalTrackerUtil
       result = project.save
       puts "PROJECT SAVED? #{result}"
       puts project.errors.inspect
-      project.announce! if result && new_record?
+      project.announce! if result && new_record
       result
     end
 
@@ -46,7 +46,7 @@ class PivotalTrackerUtil
       result = story.save
       puts "STORY SAVED? #{result}"
       puts story.errors.inspect
-      story.announce! if result && new_record?
+      story.announce! if result && new_record
       result
     end
 
@@ -62,7 +62,7 @@ class PivotalTrackerUtil
       result = note.save
       puts "NOTE SAVED? #{result}"
       puts note.errors.inspect
-      note.announce! if result && new_record?
+      note.announce! if result && new_record
       result
     end
   end
