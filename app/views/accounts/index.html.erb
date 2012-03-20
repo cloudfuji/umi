@@ -1,0 +1,30 @@
+<h1>Account Listing</h1>
+
+<%= form_tag "/accounts" do %>
+  <%= label_tag "Mailgun" %>
+  <%= hidden_field_tag 'name', "mailgun" %>
+  <%= text_field_tag "api_key", @mailgun['api_key'] %>
+  <%= submit_tag "Save" %>
+<% end %>
+
+<%= form_tag "/accounts" do %>
+  <%= label_tag "Pivotal" %>
+  <%= hidden_field_tag 'name', "pivotal" %>
+  <%= text_field_tag "api_key", @pivotal['api_key'] %>
+  <%= submit_tag "Save" %>
+  <%= link_to "Initial Import (may take awhile)", "/pivotal/import"  %>
+<% end %>
+
+<%= form_tag "/accounts" do %>
+  <%= label_tag "Wufoo" %>
+  <%= hidden_field_tag 'name', "wufoo" %>
+  <%= text_field_tag "api_key", @wufoo['api_key'] %>
+  <%= submit_tag "Save" %>
+<% end %>
+
+<%= form_tag "/accounts" do %>
+  <%= label_tag "Stripe" %>
+  <%= hidden_field_tag 'name', "stripe" %>
+  <%= text_field_tag "api_key", @stripe['api_key'] %>
+  <%= submit_tag "Save" %>
+<% end %>

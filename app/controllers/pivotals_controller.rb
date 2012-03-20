@@ -5,7 +5,22 @@ class String
 end
 
 class PivotalsController < ApplicationController
+  # Note: Blocking, bad. Will need some refactoring.
+  def import
+    PivotalTrackerUtil.refresh_client!
+
+    thread = Thread.new do
+      PivotalTrackerUtil.import_initial!
+    end
+
+    flash[:notice] = "Importing your Pivotal Tracker data into Bushido, it may take a bit!"
+    thread.join
+    redirect_to root_url
+  end
+
   def received
+    PivotalTrackerUtil.refresh_client!
+
     known_events = [:story_create,
                     :story_update,
                     :story_delete,

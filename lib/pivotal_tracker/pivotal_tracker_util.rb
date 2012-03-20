@@ -1,13 +1,19 @@
 class PivotalTrackerUtil
-  PivotalTracker::Client.token = '445cce2179c164fd95969530312de001'
-
   class << self
 
+    def refresh_client!
+      PivotalTracker::Client.token = ENV['PIVOTAL_API_KEY'] || Setting.for('pivotal').settings['api_key']
+    end
+
     def projects
+      refresh_client!
+
       PivotalTracker::Project
     end
 
     def import_initial!
+      refresh_client!
+
       projects.all.each do |project|
         if create_bushido_project(project)
 

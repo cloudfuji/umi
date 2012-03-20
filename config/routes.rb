@@ -12,7 +12,15 @@ Umi::Application.routes.draw do
 
   resource(:mailgun ) { post :notification }
   resource(:jenkins ) { post :notification }
-  resource(:pivotal ) { post :received     }
   resource(:github  ) { post :received     }
   resource(:stripe  ) { post :received     }
+
+  resource(:pivotal ) do
+    post :received
+    get  :import
+  end
+
+  resource(:accounts)
+
+  match '/' => 'accounts#index', :as => "root"
 end
