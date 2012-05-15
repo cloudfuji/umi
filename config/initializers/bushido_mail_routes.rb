@@ -1,1 +1,1 @@
-require './lib/bushido/mail_routes.rb'
+require './lib/cloudfuji/mail_routes.rb'

@@ -15,13 +15,13 @@ class PivotalTrackerUtil
       refresh_client!
 
       projects.all.each do |project|
-        if create_bushido_project(project)
+        if create_bcloudfuji_project(project)
 
           project.stories.all.each do |story|
-            if create_bushido_story(project, story)
+            if create_cloudfuji_story(project, story)
 
               story.notes.all.each do |note|
-                create_bushido_note(project, story, note)
+                create_cloudfuji_note(project, story, note)
               end
             end
           end
@@ -29,7 +29,7 @@ class PivotalTrackerUtil
       end
     end
 
-    def create_bushido_project(foreign_project)
+    def create_cloudfuji_project(foreign_project)
       project    = Pivotal::Project.find_or_initialize_by(:external_id => foreign_project.id)
       new_record = project.new_record?
       project.from_pivotal(foreign_project)
@@ -42,7 +42,7 @@ class PivotalTrackerUtil
       result
     end
 
-    def create_bushido_story(foreign_project, foreign_story)
+    def create_cloudfuji_story(foreign_project, foreign_story)
       project    = Pivotal::Project.find_or_initialize_by(:external_id => foreign_project.id)
       story      = project.stories.find_or_initialize_by(:external_id => foreign_story.id)
       new_record = story.new_record?
@@ -56,7 +56,7 @@ class PivotalTrackerUtil
       result
     end
 
-    def create_bushido_note(foreign_project, foreign_story, foreign_note)
+    def create_cloudfuji_note(foreign_project, foreign_story, foreign_note)
       project    = Pivotal::Project.find_or_initialize_by(:external_id => foreign_project.id)
       story      = project.stories.find_or_initialize_by(:external_id => foreign_story.id)
       note       = story.notes.find_or_initialize_by(:external_id => foreign_note.id)

@@ -12,10 +12,10 @@ platform :ruby do
   gem 'bson_ext', '= 1.3.1'
 end
 
-# Bushido gems
+# Cloudfuji gems
 gem "devise"
-gem "devise_bushido_authenticatable"
-gem "bushido"
+gem "devise_cloudfuji_authenticatable"
+gem "cloudfuji"
 gem "uuid"
 
 # External integrations

@@ -13,7 +13,7 @@ class PivotalsController < ApplicationController
       PivotalTrackerUtil.import_initial!
     end
 
-    flash[:notice] = "Importing your Pivotal Tracker data into Bushido, it may take a bit!"
+    flash[:notice] = "Importing your Pivotal Tracker data into Cloudfuji, it may take a bit!"
     thread.join
     redirect_to root_url
   end
@@ -57,10 +57,10 @@ class PivotalsController < ApplicationController
 
     category     = "project_task"
     name         = "updated"
-    data         = story.to_bushido
+    data         = story.to_cloudfuji
     data[:human] = "In Pivotal, #{params['activity']['description']} on project #{story.project.name}"
     data[:url]   = params['activity']['stories'].first['url']
-    Bushido::Event.publish(:category => category, :name => name, :data => data)
+    Cloudfuji::Event.publish(:category => category, :name => name, :data => data)
   end
 
   def story_delete(foreign_story)
@@ -68,10 +68,10 @@ class PivotalsController < ApplicationController
 
     category     = "project_task"
     name         = "deleted"
-    data         = story.to_bushido
+    data         = story.to_cloudfuji
     data[:human] = "In Pivotal, #{params['activity']['description']} on project #{story.project.name}"
     data[:url]   = url
-    Bushido::Event.publish(:category => category, :name => name, :data => data)
+    Cloudfuji::Event.publish(:category => category, :name => name, :data => data)
   end
 
   def note_create(foreign_note)

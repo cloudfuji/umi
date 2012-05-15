@@ -21,7 +21,7 @@ module Pivotal
     field :use_https,           :type => Boolean
     field :external_id,         :type => Integer
 
-    # Bushido Fields
+    # Cloudfuji Fields
     field :ido_id,         :type => String
     field :announced,      :type => Boolean
 
@@ -51,7 +51,7 @@ module Pivotal
       self.external_id      = foreign_project.id
     end
 
-    def to_bushido
+    def to_cloudfuji
       {
         :ido_id              => self.ido_id,
         :external_id         => self.external_id,

@@ -24,7 +24,7 @@ class User
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :ido_id, :first_name, :last_name
 
-  devise :bushido_authenticatable, :token_authenticatable
+  devise :cloudfuji_authenticatable, :token_authenticatable
 
   def self.find_by_full_name(name)
     puts "Name: #{name}"
@@ -35,7 +35,7 @@ class User
     "#{first_name} #{last_name}"
   end
 
-  def bushido_extra_attributes(extra_attributes)
+  def cloudfuji_extra_attributes(extra_attributes)
     self.first_name = extra_attributes["first_name"].to_s
     self.last_name  = extra_attributes["last_name"].to_s
     self.email      = extra_attributes["email"]

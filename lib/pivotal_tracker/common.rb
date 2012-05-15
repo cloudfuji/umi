@@ -1,7 +1,7 @@
 module Pivotal
   module Common
     def set_ido_id!
-      self.ido_id ||= Bushido::Ido.retrieve_ido_id
+      self.ido_id ||= Cloudfuji::Ido.retrieve_ido_id
     end
     
     def announce!
@@ -9,7 +9,7 @@ module Pivotal
 
       category = self.ido_schema_class
       name     = "created"
-      data     = self.to_bushido
+      data     = self.to_cloudfuji
 
       human = {
         "project" => Proc.new { |project| "Project #{project.name} created from Pivotal Tracker" },
@@ -19,7 +19,7 @@ module Pivotal
 
       data[:human] = human
 
-      Bushido::Event.publish(:category => category, :name => name, :data => data)
+      Cloudfuji::Event.publish(:category => category, :name => name, :data => data)
     end
   end
 end

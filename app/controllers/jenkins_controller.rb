@@ -5,7 +5,7 @@ class JenkinsController < ApplicationController
     data = nil
 
     # Dealing with Jenkin's bad headers
-    # "{\"name\":\"bushido_master\",\"url\":\"job/bushido_master/\",\"build\":{\"number\":452,\"phase\":\"STARTED\",\"url\":\"job/bushido_master/452/\"}}"=>nil, "action"=>"notification", "controller"=>"jenkins", "format"=>"json"}
+    # "{\"name\":\"cloudfuji_master\",\"url\":\"job/cloudfuji_master/\",\"build\":{\"number\":452,\"phase\":\"STARTED\",\"url\":\"job/cloudfuji_master/452/\"}}"=>nil, "action"=>"notification", "controller"=>"jenkins", "format"=>"json"}
     params.keys.each do |key|
       begin
         data = JSON(key)
@@ -37,10 +37,10 @@ class JenkinsController < ApplicationController
 
     event[:data][:human] = "Build #{data['name']} ##{data['build']['number']} has #{event[:name]}"
 
-    Bushido::Event.publish(event)
+    Cloudfuji::Event.publish(event)
 
     User.all.collect do |user|
-      Bushido::User.notify(user.ido_id, "Build Update", event[:data][:human], "development")
+      Cloudfuji::User.notify(user.ido_id, "Build Update", event[:data][:human], "development")
     end
 
     render :json => "OK"

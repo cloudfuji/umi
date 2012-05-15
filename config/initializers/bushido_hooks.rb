@@ -1,1 +1,1 @@
-Dir["#{Dir.pwd}/lib/bushido/**/*.rb"].each { |file| require file }
+Dir["#{Dir.pwd}/lib/cloudfuji/**/*.rb"].each { |file| require file }
