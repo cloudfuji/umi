@@ -8,10 +8,10 @@ class AccountsController < ApplicationController
 
   def create
     config = Setting.find_or_create_by(:name => params[:name])
-    config.settings = {:api_key => params[:api_key]}
+    config.settings = {:api_key => params[:api_key], :human_name => params[:name]}
     config.save
 
-    flash[:notice] = "Ok, updated #{config.human_name}!"
+    flash[:notice] = "Ok, updated #{config.name}!"
 
     redirect_to root_url
   end

@@ -93,7 +93,16 @@
 
     </div>
 </div>
-
+    <% if flash[:warning] || flash[:notice] %>
+      <div class="flash">
+        <% unless flash[:warning].nil? %> 
+          <p><%=raw flash[:warning] %></p>
+        <% end %>
+        <% unless flash[:notice].nil? %>
+          <p><%=raw flash[:notice] %></p>
+        <% end %>
+      </div>
+    <% end %>
     <section id="main" class="clearfix">
       <div id="content">
       <%= yield %>
