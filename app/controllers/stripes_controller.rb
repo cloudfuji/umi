@@ -1,6 +1,6 @@
 class StripesController < ApplicationController
   def received
-    data = Bushido::Utils.normalize_keys(params)
+    data = cloudfuji::Utils.normalize_keys(params)
 
     p data
 
@@ -9,7 +9,7 @@ class StripesController < ApplicationController
 
     puts event.inspect
 
-    Bushido::Event.publish(event)
+    cloudfuji::Event.publish(event)
 
     render :json => "OK"
   end

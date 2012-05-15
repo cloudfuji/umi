@@ -10,7 +10,7 @@ class GithubsController < ApplicationController
 
 
 
-    Bushido::Event.publish(event)
+    cloudfuji::Event.publish(event)
 
     render :json => "OK"
   end

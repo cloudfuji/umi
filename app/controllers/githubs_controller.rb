@@ -3,7 +3,7 @@ class GithubsController < ApplicationController
     puts params.inspect
     payload = params[:payload]
     puts payload.inspect
-    payload = Bushido::Utils.normalize_keys(JSON(payload)) if payload.is_a?(String)
+    payload = cloudfuji::Utils.normalize_keys(JSON(payload)) if payload.is_a?(String)
     puts payload.inspect
 
     event = {}
@@ -24,10 +24,10 @@ class GithubsController < ApplicationController
 
     puts event.inspect
 
-    Bushido::Event.publish(event)
+    cloudfuji::Event.publish(event)
 
     User.all.collect do |user|
-      Bushido::User.notify(user.ido_id, "Git Received", event[:data][:human], "development")
+      cloudfuji::User.notify(user.ido_id, "Git Received", event[:data][:human], "development")
     end
 
     render :json => "OK"

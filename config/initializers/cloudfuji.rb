@@ -1,4 +1,4 @@
-module Bushido
+module Cloudfuji
   class Ido
     class << self
       def retrieve_ido_id
