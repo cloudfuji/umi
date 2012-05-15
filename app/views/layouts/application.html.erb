@@ -24,11 +24,9 @@
 <link rel="shortcut icon" href="http://cloudfuji.com/faviconred-w.png">
 <link rel="apple-touch-icon" href="http://cloudfuji.com/apple-touch-icon.png" >
 
-
-<link rel="stylesheet" href="http://cloudrufji.com/javascripts/vendor/jquery.terminal/css/jquery.terminal.css">
-<link rel="stylesheet" href="http://cloudfuji.com/stylesheets/pygments.css" rel="stylesheet" type="text/css" />
+<%= stylesheet_link_tag "application" %>
+<link rel="stylesheet" href="http://cloudfuji.com/javascripts/vendor/jquery.terminal/css/jquery.terminal.css">
 <link href="http://cloudfuji.com/packages/common.css?1332781698" media="all" rel="stylesheet" type="text/css" />
-<link href="http://cloudfuji.com/packages/print.css?1332781698" media="print" rel="stylesheet" type="text/css" />
 
 <!--[if IE]>
 <link href="http://cloudfuji.com/stylesheets/ie.css?1330970594" media="screen, projection" rel="stylesheet" type="text/css" />
@@ -38,8 +36,7 @@
   #wrap {display:table;height:100%}
 </style>
 <![endif]-->
-<meta name="csrf-param" content="authenticity_token"/>
-<meta name="csrf-token" content="Ljqk1VWWJZzHh9Ajx3Xs19DlHOU7QrT4CysD8LQo&#47;Hs="/>
+<%= csrf_meta_tags %>
 
 <!-- Uncomment if you are specifically targeting less enabled mobile browsers
 <link rel="stylesheet" media="handheld" href="css/handheld.css?v=2">  -->
@@ -82,14 +79,6 @@
   
 //]]>
 </script>
-
-<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
-<script type="text/javascript">
-  stLight.options({
-  publisher: "28531567-cece-4dfe-9b8f-315d9573ffb7"
-  });
-</script>
-
 
 </head>
 
@@ -158,6 +147,7 @@
 <script type='text/javascript'> var mp_protocol = (('https:' == document.location.protocol) ? 'https://' : 'http://'); document.write(unescape('%3Cscript src="' + mp_protocol + 'api.mixpanel.com/site_media/js/api/mixpanel.js" type="text/javascript"%3E%3C/script%3E')); </script> <script type='text/javascript'> try {  var mpmetrics = new MixpanelLib('dbc270955c6159bbc732690b8072ef35'); } catch(err) { null_fn = function () {}; var mpmetrics = {  track: null_fn,  track_funnel: null_fn,  register: null_fn,  register_once: null_fn, register_funnel: null_fn }; } </script>
 <script src="http://cloudfuji.com/packages/common.js?1332781698" type="text/javascript"></script>
 <script src="http://cloudfuji.com/packages/static.js?1332781698" type="text/javascript"></script>
+<%= javascript_include_tag "application" %>
 
 </body>
 </html>
