@@ -10,7 +10,7 @@ class MailgunsController < ApplicationController
     
     return render(:status => 400) unless known_events.include?(params["event"].to_sym)
 
-    cloudfuji::Event.publish(event)
+    Cloudfuji::Event.publish(event)
 
     render :json => "ok", :status => 200
   end
