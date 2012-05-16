@@ -8,7 +8,7 @@ class User
   field :locale
   field :ido_id,    :type    => String
   field :admin,     :type    => Boolean, :default => true  
-  field :time_zone, :default => "UTC"
+  field :timezone,  :default => "UTC"
   field :authentication_token
 
   index :email
