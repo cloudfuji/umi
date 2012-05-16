@@ -10,12 +10,12 @@ end
 Umi::Application.routes.draw do
   devise_for :users
 
-  match "/mailgun" => 'mailguns#notification', :via => :post
-  match "/jenkins" => 'jenkins#notification',  :via => :post
-  match "/stripe"  => 'stripes#received',      :via => :post
-  match "/events"  => 'events#create',         :via => :post
+  match "/mailgun" => 'mailgun#notification', :via => :post
+  match "/jenkins" => 'jenkins#notification', :via => :post
+  match "/stripe"  => 'stripe#received',      :via => :post
+  match "/events"  => 'events#create',        :via => :post
 
-  resource(:pivotal ) do
+  resource(:pivotal) do
     post :received
     get  :import
   end
