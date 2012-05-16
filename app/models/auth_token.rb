@@ -37,4 +37,9 @@ class AuthToken
       false
     end
   end
+
+  def disable!
+    self.active = false
+    self.save
+  end
 end
