@@ -2,14 +2,14 @@ class AuthToken
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :name,       :type => String
-  field :human_name, :type => String
-  field :token,      :type => Hash
-  field :active,     :tyep => Boolean
+  field :name,        :type => String
+  field :description, :type => String
+  field :token,       :type => String
+  field :active,      :type => Boolean
 
   validates_uniqueness_of :name
   validates_uniqueness_of :token
-  validates_uniqueness_of :human_name
+  validates_uniqueness_of :description
 
   def self.for(resource)
     self.first(:conditions => {:name => resource})
@@ -24,11 +24,11 @@ class AuthToken
     (rand(128) + 64).times.collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
   end
 
-  def self.create_new!(name, human_name)
+  def self.create_new!(name, description)
     auth_token = self.new
     auth_token.token = self.generate_token
     auth_token.name = name
-    auth_token.human_name = human_name
+    auth_token.description = description
     auth_token.active = true
 
     if auth_token.save
