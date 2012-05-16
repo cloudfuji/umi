@@ -57,29 +57,6 @@
 
 </script>
 
-<script type="text/javascript">
-//<![CDATA[
-
-  (function(){
-    var notifierJsScheme = (("https:" == document.location.protocol) ? "https://" : "http://");
-    document.write(unescape("%3Cscript src='" + notifierJsScheme + "spirited-temple-1203.cloudfujiapp.com:80/javascripts/notifier.js' type='text/javascript'%3E%3C/script%3E"));
-  })();
-
-//]]>
-</script>
-
-<script type="text/javascript">
-//<![CDATA[
-
-    window.Airbrake = (typeof(Airbrake) == 'undefined' && typeof(Hoptoad) != 'undefined') ? Hoptoad : Airbrake
-    Airbrake.setKey('028e313282d9b747f9746fc012e20dbc');
-    Airbrake.setHost('spirited-temple-1203.cloudfujiapp.com:80');
-    Airbrake.setEnvironment('production');
-    Airbrake.setErrorDefaults({ url: "http://cloudfuji.com/", component: "static", action: "splash" });
-  
-//]]>
-</script>
-
 </head>
 
 <body id="blog_body" class="blog">
@@ -108,22 +85,6 @@
       <%= yield %>
       </div>
 
-      <!--- It sure is quiet around here!
-      <div class="clearfix" id="disqus_thread"></div>
-      <script type="text/javascript">
-	/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-	var disqus_shortname = cloudfujiblog'; // required: replace example with your forum shortname
-
-	/* * * DON'T EDIT BELOW THIS LINE * * */
-	(function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-	})();
-      </script>
-      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-      <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
-      --->
     </section>
 
   </div> <!-- end of #ro0t -->
@@ -153,7 +114,6 @@
 
   </footer>
   
-<script type='text/javascript'> var mp_protocol = (('https:' == document.location.protocol) ? 'https://' : 'http://'); document.write(unescape('%3Cscript src="' + mp_protocol + 'api.mixpanel.com/site_media/js/api/mixpanel.js" type="text/javascript"%3E%3C/script%3E')); </script> <script type='text/javascript'> try {  var mpmetrics = new MixpanelLib('dbc270955c6159bbc732690b8072ef35'); } catch(err) { null_fn = function () {}; var mpmetrics = {  track: null_fn,  track_funnel: null_fn,  register: null_fn,  register_once: null_fn, register_funnel: null_fn }; } </script>
 <script src="http://cloudfuji.com/packages/common.js?1332781698" type="text/javascript"></script>
 <script src="http://cloudfuji.com/packages/static.js?1332781698" type="text/javascript"></script>
 <%= javascript_include_tag "application" %>

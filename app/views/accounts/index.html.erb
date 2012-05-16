@@ -28,3 +28,17 @@
   <%= text_field_tag "api_key", @stripe['api_key'] %>
   <%= submit_tag "Save", :class => 'button hot' %>
 <% end %>
+
+
+<div id="custom_data" style="padding-top: 20px;">
+  <h2>Custom data</h2>
+  <p>Already using Google Analytics or Mixpanel? Great.</br>
+    Just drop this IdoShare script into your page <strong>After those libraries</strong> and it will start collecting your exisiting events.</p>
+
+  </code>
+  <pre>
+    &lt;script src="GoogleAnalytics"&gt;&lt;/script&gt;
+    &lt;script src="Mixpanel"&gt;&lt;/script&gt;
+    <strong>&lt;script src="<%= request.protocol %><%= request.host %>/IdoShare.js"&gt;&lt;/script&gt;</strong>
+  </pre>
+</div>

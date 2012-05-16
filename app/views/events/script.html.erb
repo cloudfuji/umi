@@ -1,0 +1,62 @@
+var IdoShare = (function(){
+  if(typeof window.console === 'undefined'){
+    window.console = {log: function(){return false;}};
+  }
+
+  var auth_token = ''
+      ,endpoint_url = 'http://noshido.com/3000/events'
+      ;  
+
+
+  function push(event_array){
+      console.log('idoShare push called', event_array);
+      //$.get(endpoint_url, {event: {test: true}});
+  }
+
+  
+  function checkForGA(){
+    if(typeof window._gaq == 'undefined'){
+	return false;
+    }
+
+    if(window._gaq.push != [].push){
+	console.log("updating the push method");
+	var old_meth = window._gaq.push
+	window._gaq.push = function(event_array){
+	    console.log('new gaq push called!', event_array);
+	    push(event_array);
+	    old_meth.apply(window._gaq, arguments);
+	}
+    }
+  }
+
+  function checkForMP(){
+    var mp_api, old_meth;
+
+    if(typeof window.mpq != 'undefined'){
+	mp_api = window.mpq
+    }else if(typeof window.mixpanel != 'undefined'){
+	mp_api = window.mixpanel
+    }else{
+	return false;
+    }
+
+    if(typeof mp_api.track != 'undefined'){
+	var old_meth = mp_api.track;
+	mp_api.track = function(){
+	    console.log("mp_api track", arguments);
+	    push(arguments);
+	    old_meth.apply(window.mixpanel, arguments);
+        }
+    }
+
+  }
+
+  checkForGA();
+  checkForMP();
+
+  return {
+      push: push
+  };
+
+})();
