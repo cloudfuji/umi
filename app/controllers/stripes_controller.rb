@@ -1,6 +1,6 @@
 class StripesController < ApplicationController
   def received
-    data = cloudfuji::Utils.normalize_keys(params)
+    data = Cloudfuji::Utils.normalize_keys(params)
 
     p data
 
@@ -9,7 +9,7 @@ class StripesController < ApplicationController
 
     puts event.inspect
 
-    cloudfuji::Event.publish(event)
+    Cloudfuji::Event.publish(event)
 
     render :json => "OK"
   end
