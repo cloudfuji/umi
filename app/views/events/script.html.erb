@@ -3,15 +3,30 @@ var IdoShare = (function(){
     window.console = {log: function(){return false;}};
   }
 
+/*
+* TODO Dependency loading, JSON, Jquery
+* TODO mixpanel old async library?
+*
+*/
   var auth_token = ''
-      ,endpoint_url = 'http://noshido.com/3000/events'
+      ,endpoint_url = '//noshido.com/3000/events'
       ;  
 
 
   function push(event_array){
       console.log('idoShare push called', event_array);
-      //$.get(endpoint_url, {event: {test: true}});
+      // if(typeof window.jQuery != 'undefined'){
+      //   $.getJSON(endpoint_url, {event: encodeURIComponent(JSON.stringify(event_array))});
+      // }
+      var tag = document.createElement("script");
+      tag.type = "text/javascript"; 
+      tag.async = true;
+      tag.defer = true;
+      tag.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + endpoint_url+"?event="+encodeURIComponent(JSON.stringify(event_array));
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(tag, s);
   }
+
 
   
   function checkForGA(){
@@ -29,6 +44,7 @@ var IdoShare = (function(){
 	}
     }
   }
+
 
   function checkForMP(){
     var mp_api, old_meth;
