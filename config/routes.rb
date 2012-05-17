@@ -13,7 +13,7 @@ Umi::Application.routes.draw do
   match "/mailgun" => 'mailgun#notification', :via => :post
   match "/jenkins" => 'jenkins#notification', :via => :post
   match "/stripe"  => 'stripe#received',      :via => :post
-  match "/events"  => 'events#create',        :via => :post
+  match "/events"  => 'events#create',        :via => [:post, :get]
   match "/IdoShare" => 'events#script'
 
   resource(:pivotal) do
