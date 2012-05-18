@@ -4,26 +4,33 @@ var IdoShare = (function(){
   }
 
 /*
-* TODO Dependency loading, JSON
+* 
 * TODO mixpanel old async library?
 *
 */
+
   var auth_token = '<%= @auth_token.token  %>'
-      ,endpoint_url = '<%= events_url %>.json'
+      ,endpoint_url = '//<%= request.host%><%= (request.port == 80) ? '' : ":#{request.port}" %><%= events_path %>.json'
+      ,protocol = (document.location.protocol == 'https:' ? 'https:' : 'http:')
+      ,all_deps = false
+      ,async_log = []
+      ,returned_api = {}
+      ,api_inaction = false
+      ,true_api = {
+	  push: push
+      }
       ;  
 
 
-  function push(event_array){
-      console.log("pushing event", event_array);
+  function push(event_obj){
       var tag = document.createElement("script");
       tag.type = "text/javascript"; 
       tag.async = true;
       tag.defer = true;
-      tag.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + endpoint_url+"?umi_token="+auth_token+"&event="+encodeURIComponent(JSON.stringify(event_array));
+      tag.src = protocol + endpoint_url+"?umi_token="+auth_token+"&event="+encodeURIComponent(JSON.stringify(event_obj));
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(tag, s);
   }
-
 
   
   function checkForGA(){
@@ -32,7 +39,6 @@ var IdoShare = (function(){
     }
 
     if(window._gaq.push != [].push){
-	console.log("updating the push method");
 	var old_meth = window._gaq.push
 	window._gaq.push = function(){
 	    var ido_event = {
@@ -43,7 +49,12 @@ var IdoShare = (function(){
 		    ,value: arguments[0][4]
 		}
 	    };
-	    push(ido_event);
+	    
+	    if(api_inaction = true){
+		push(ido_event);
+            }else{
+		async_log.push('push', ido_event);
+	    }
 	    old_meth.apply(window._gaq, arguments);
 	}
     }
@@ -69,7 +80,12 @@ var IdoShare = (function(){
 		,name: arguments[0]
 		,data : arguments[1]
 	    };
-	    push(ido_event);
+
+	    if(api_inaction = true){
+		push(ido_event);
+            }else{
+		async_log.push('push', ido_event);
+	    }
 	    old_meth.apply(window.mixpanel, arguments);
         }
     }
@@ -79,8 +95,88 @@ var IdoShare = (function(){
   checkForGA();
   checkForMP();
 
-  return {
-      push: push
-  };
+  function loadDepJs(dep_url, cb){
+    var s=document.createElement('script');
+    s.setAttribute('type', "text/javascript");
+    s.setAttribute('src', dep_url);
+    head.appendChild(s);
+    s.onload = function(){
+      if(typeof cb === 'function'){
+        cb();
+      }
+      scriptOnLoad();
+    };
+
+    s.onreadystatechange = function () {
+      if (this.readyState === 'complete' || this.readyState === 'loaded'){
+        if(typeof cb === 'function'){
+          cb();
+        }
+        scriptOnLoad();
+      }
+    };
+  }
+
+
+  function executeBackLog(){
+      if(api_inaction === false){
+	  api_inaction = true;
+	  var i;
+	  for(i = 0; i<async_log.length; i++){
+	      //call the method with given arguments
+	      true_api[async_log[i][0]].apply(true_api, async_log[i][1]);	      
+	  }
+	  async_log = [];
+      }
+  }
+   
+  function returnTrueApi(){
+    for(var value in true_api){
+      returned_api[value] = true_api[value];
+    }
+    executeBackLog();
+  }
+   
+   
+  function scriptOnLoad(){
+    if(typeof JSON === "undefined" || !JSON){
+      return;
+    }
+
+    all_deps = true;
+    if(api_inaction === false){
+	returnTrueApi();
+    }	
+  }
+
+
+
+  //If there is no jquery on the page load the latest
+  if(typeof window.JSON === 'undefined' || !JSON){
+    loadDepJs(protocol+'//cloudfuji.com/javascripts/easyXDM-2.4.15.118/json2.js');
+  } 
+
+
+  //call the onload incase all dependencies are met.
+  scriptOnLoad();
+      
+  /*
+   *
+   * Return an api, depends on if dependencys are loaded or not
+   *
+   */
+  return (function(){
+    if(all_deps === true){
+      return true_api;
+    }else{
+      for(prop in true_api){ (function(prop){
+        returned_api[prop] = function(){
+          async_log.push([prop, arguments]);
+        };
+      }(prop)); }
+      return returned_api;
+    }
+  }());
+
 
 })();
