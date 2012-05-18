@@ -5,15 +5,18 @@ module Ido
         if _event = process(event)
           return fire(_event)
         else
+          puts " COULD NOT PROCESS EVENT"
           return false
         end
       end
 
       def process(event)
+        puts "NORMALIZING KEYS"
         event  = Cloudfuji::Utils.normalize_keys(event)
         if validate_event(event)
           return event
         else
+          puts "NOT A VALID EVENT"
           return false
         end
       end
@@ -24,6 +27,7 @@ module Ido
       end
 
       def fire(event)
+        puts "FIRING EVENT"
         Cloudfuji::Event.publish(event)
       end
 

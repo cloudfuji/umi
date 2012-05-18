@@ -6,8 +6,8 @@ class EventsController < ApplicationController
   # Requests MUST have a `category` and `name`chr
   def create
     respond_to do |format|
-      if Ido::EventProcessor.process_and_fire!(params[:event])
-        format.json { render :json => true }
+      if Ido::EventProcessor.process_and_fire!(JSON.parse(params[:event]))
+        format.json { render :json => true, :status => 200}
       else
         format.json { render :json => false, :status => :unprocessable_entity }
       end
@@ -16,6 +16,13 @@ class EventsController < ApplicationController
 
 
   def script
+    @auth_token = AuthToken.find_by_name('ido_share')
+
+    if @auth_token.nil?
+      @auth_token = AuthToken.create_new!('ido_share', 'ido share starter')
+    end
+
+
     response.headers["Last-Modified"] = Time.now.httpdate.to_s
     response.headers["Expires"] = 0.to_s
     # HTTP 1.0

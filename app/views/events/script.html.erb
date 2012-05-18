@@ -4,25 +4,22 @@ var IdoShare = (function(){
   }
 
 /*
-* TODO Dependency loading, JSON, Jquery
+* TODO Dependency loading, JSON
 * TODO mixpanel old async library?
 *
 */
-  var auth_token = ''
-      ,endpoint_url = '//noshido.com/3000/events'
+  var auth_token = '<%= @auth_token.token  %>'
+      ,endpoint_url = '<%= events_url %>.json'
       ;  
 
 
   function push(event_array){
-      console.log('idoShare push called', event_array);
-      // if(typeof window.jQuery != 'undefined'){
-      //   $.getJSON(endpoint_url, {event: encodeURIComponent(JSON.stringify(event_array))});
-      // }
+      console.log("pushing event", event_array);
       var tag = document.createElement("script");
       tag.type = "text/javascript"; 
       tag.async = true;
       tag.defer = true;
-      tag.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + endpoint_url+"?event="+encodeURIComponent(JSON.stringify(event_array));
+      tag.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + endpoint_url+"?umi_token="+auth_token+"&event="+encodeURIComponent(JSON.stringify(event_array));
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(tag, s);
   }
@@ -37,9 +34,16 @@ var IdoShare = (function(){
     if(window._gaq.push != [].push){
 	console.log("updating the push method");
 	var old_meth = window._gaq.push
-	window._gaq.push = function(event_array){
-	    console.log('new gaq push called!', event_array);
-	    push(event_array);
+	window._gaq.push = function(){
+	    var ido_event = {
+		category: arguments[0][1]
+		,name: arguments[0][2]
+		,data : {
+		    label: arguments[0][3]
+		    ,value: arguments[0][4]
+		}
+	    };
+	    push(ido_event);
 	    old_meth.apply(window._gaq, arguments);
 	}
     }
@@ -60,8 +64,12 @@ var IdoShare = (function(){
     if(typeof mp_api.track != 'undefined'){
 	var old_meth = mp_api.track;
 	mp_api.track = function(){
-	    console.log("mp_api track", arguments);
-	    push(arguments);
+	    var ido_event = {
+		category: "WebMetric"
+		,name: arguments[0]
+		,data : arguments[1]
+	    };
+	    push(ido_event);
 	    old_meth.apply(window.mixpanel, arguments);
         }
     }

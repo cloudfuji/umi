@@ -14,7 +14,7 @@ Umi::Application.routes.draw do
   match "/jenkins"   => 'jenkins#notification', :via => :post
   match "/stripe"    => 'stripe#received',      :via => :post
   match "/events"    => 'events#create',        :via => [:post, :get]
-  match "/ido_share" => 'events#script'
+  match "/ido_share" => 'events#script', :as => 'script'
 
   resources(:auth_tokens)
 

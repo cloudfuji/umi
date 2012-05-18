@@ -23,6 +23,10 @@ class AuthToken
     self.first(:conditions => {:active => true, :token => token})
   end
 
+  def self.find_by_name(name)
+    self.first(:conditions => {:active => true, :name => name})
+  end
+
   def self.generate_token
     # From http://www.zacharyfox.com/blog/ruby-on-rails/password-hashing 
     (rand(128) + 64).times.collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
