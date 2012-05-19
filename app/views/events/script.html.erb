@@ -53,7 +53,7 @@ var IdoShare = (function(){
 	    if(api_inaction = true){
 		push(ido_event);
             }else{
-		async_log.push('push', ido_event);
+		async_log.push(['push', ido_event]);
 	    }
 	    old_meth.apply(window._gaq, arguments);
 	}
@@ -84,7 +84,7 @@ var IdoShare = (function(){
 	    if(api_inaction = true){
 		push(ido_event);
             }else{
-		async_log.push('push', ido_event);
+		async_log.push(['push', ido_event]);
 	    }
 	    old_meth.apply(window.mixpanel, arguments);
         }
