@@ -32,13 +32,27 @@
 
 <div id="custom_data" style="padding-top: 20px;">
   <h2>Custom data</h2>
+  <h3>Include ido_share.js</h3>
   <p>Already using Google Analytics or Mixpanel? Great.</br>
     Just drop this IdoShare script into your page <strong>After those libraries</strong> and it will start collecting your exisiting events.</p>
+ <pre>
+  &lt;script type="text/javascript"&gt;Your Google Analytics Code&lt;/script&gt;
+  &lt;script type="text/javascript"&gt;Your Mixpanel Code&lt;/script&gt;
+  <strong>&lt;script type="text/javascript" src="<%= script_url %>.js"&gt;&lt;/script&gt;</strong>
+</pre>
 
-  </code>
-  <pre>
-    &lt;script src="GoogleAnalytics"&gt;&lt;/script&gt;
-    &lt;script src="Mixpanel"&gt;&lt;/script&gt;
-    <strong>&lt;script src="<%= request.protocol %><%= request.host %>/IdoShare.js"&gt;&lt;/script&gt;</strong>
-  </pre>
+   <h3>Publishing events</h3>
+
+<pre>
+  &lt;script type="text/javascript" src="<%= script_url %>.js"&gt;&lt;/script&gt;
+  <strong>&lt;script type="text/javascript" &gt;
+    IdoShare.push({
+      category: "IdoShare category"
+      ,name: "IdoShare name"
+      ,data: {} //javascript object with your data in.
+    });
+  &lt;/script&gt;
+  </strong>
+</pre>
+
 </div>

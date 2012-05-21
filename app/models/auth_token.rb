@@ -7,6 +7,10 @@ class AuthToken
   field :token,       :type => String
   field :active,      :type => Boolean
 
+  validates_presence_of :name
+  validates_presence_of :description
+  validates_presence_of :token
+
   validates_uniqueness_of :name
   validates_uniqueness_of :token
   validates_uniqueness_of :description
@@ -17,6 +21,10 @@ class AuthToken
 
   def self.find_by_token(token)
     self.first(:conditions => {:active => true, :token => token})
+  end
+
+  def self.find_by_name(name)
+    self.first(:conditions => {:active => true, :name => name})
   end
 
   def self.generate_token
