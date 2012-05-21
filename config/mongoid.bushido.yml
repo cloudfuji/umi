@@ -1,8 +1,0 @@
-# Mongoid Configuration for MongoHQ on cloudfuji
-# ============================================
-
-development:
-  uri: <%= ENV['MONGODB_URL'] %>
-
-production:
-  uri: <%= ENV['MONGODB_URL'] %>
