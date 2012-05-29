@@ -15,7 +15,7 @@ class PivotalTrackerUtil
       refresh_client!
 
       projects.all.each do |project|
-        if create_bcloudfuji_project(project)
+        if create_cloudfuji_project(project)
 
           project.stories.all.each do |story|
             if create_cloudfuji_story(project, story)

@@ -24,6 +24,7 @@ gem 'pivotal-tracker'
 
 # Error handling
 gem 'airbrake'
+gem 'airbrake_user_attributes'
 
 # Gems used only for assets and not required
 # in production environments by default.

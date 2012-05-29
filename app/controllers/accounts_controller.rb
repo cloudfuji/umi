@@ -1,4 +1,6 @@
 class AccountsController < ApplicationController
+  before_filter :authenticate_user!
+
   def index
     @auth_token = AuthToken.find_by_name('ido_share')
 

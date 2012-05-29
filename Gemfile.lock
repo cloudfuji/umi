@@ -33,6 +33,8 @@ GEM
     airbrake (3.0.9)
       activesupport
       builder
+    airbrake_user_attributes (0.1.2)
+      airbrake (= 3.0.9)
     ansi (1.4.2)
     arel (2.2.3)
     awesome_print (1.0.2)
@@ -191,6 +193,7 @@ PLATFORMS
 
 DEPENDENCIES
   airbrake
+  airbrake_user_attributes
   awesome_print
   bson (= 1.3.1)
   bson_ext (= 1.3.1)
