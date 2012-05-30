@@ -1,4 +1,4 @@
-class StripesController < ApplicationController
+class StripeController < ApplicationController
   def received
     data = Cloudfuji::Utils.normalize_keys(params)
 

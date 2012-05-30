@@ -1,4 +1,4 @@
-class GithubsController < ApplicationController
+class GithubController < ApplicationController
   def received
     puts params.inspect
     payload = params[:payload]

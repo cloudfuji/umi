@@ -1,6 +1,6 @@
 require 'openssl'
 
-class MailgunsController < ApplicationController
+class MailgunController < ApplicationController
   before_filter :authenticate_request!
 
   def notification

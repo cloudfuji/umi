@@ -13,6 +13,7 @@ Umi::Application.routes.draw do
   match "/mailgun/notification" => 'mailgun#notification', :via => :post
   match "/jenkins/notification" => 'jenkins#notification', :via => :post
   match "/stripe/received"      => 'stripe#received',      :via => :post
+  match "/github/received"      => 'github#received',      :via => :post
   match "/events"               => 'events#create',        :via => [:post, :get]
   match "/ido_share"            => 'events#script',        :as => 'script'
 
