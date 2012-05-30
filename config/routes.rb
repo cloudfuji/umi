@@ -10,11 +10,11 @@ end
 Umi::Application.routes.draw do
   devise_for :users
 
-  match "/mailgun"   => 'mailgun#notification', :via => :post
-  match "/jenkins"   => 'jenkins#notification', :via => :post
-  match "/stripe"    => 'stripe#received',      :via => :post
-  match "/events"    => 'events#create',        :via => [:post, :get]
-  match "/ido_share" => 'events#script', :as => 'script'
+  match "/mailgun/notification" => 'mailgun#notification', :via => :post
+  match "/jenkins/notification" => 'jenkins#notification', :via => :post
+  match "/stripe/received"      => 'stripe#received',      :via => :post
+  match "/events"               => 'events#create',        :via => [:post, :get]
+  match "/ido_share"            => 'events#script',        :as => 'script'
 
   resources(:auth_tokens)
 
