@@ -12,6 +12,10 @@ class CloudfujiUserHooks < Cloudfuji::EventObserver
     user.email      = data['email']
     user.ido_id     = data['ido_id']
     user.save
+
+    ["pivotal", "mailgun", "wufoo", "stripe", "github"].each do |service_name|
+      user.settings.find_or_create_by(:name => service_name)
+    end
   end
 
   def cloudfuji_user_removed
