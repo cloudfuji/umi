@@ -112,4 +112,8 @@ class MailgunController < ApplicationController
   def authenticate_request!
     return render(:status => 401) unless verify
   end
+
+  def service_api_key
+    current_user.settings_for(@@service)['api_key']
+  end
 end

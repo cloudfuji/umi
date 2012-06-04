@@ -13,8 +13,4 @@ class ApplicationController < ActionController::Base
 
     @current_user = @umi_token.user
   end
-
-  def service_api_key
-    current_user.settings_for(@@service)['api_key']
-  end
 end
