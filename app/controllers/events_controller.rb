@@ -1,6 +1,4 @@
 class EventsController < ApplicationController
-  before_filter :umi_authenticate_token!
-
   # POST /events
   # Incoming requests are expected to be authenticated with an API token
   # Requests MUST have a `category` and `name`
