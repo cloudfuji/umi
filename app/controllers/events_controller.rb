@@ -25,5 +25,7 @@ class EventsController < ApplicationController
     response.headers['Content-type'] = 'application/javascript; charset=utf-8'
     
     render :action => 'script', :layout => false, :content_type => 'text/javascript'
+
+    @auth_token = current_user.auth_tokens.first.token
   end
 end
