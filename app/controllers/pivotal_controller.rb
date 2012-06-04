@@ -94,7 +94,7 @@ class PivotalController < ApplicationController
   end
 
   def find_foreign_project
-    @foreign_project = PivotalTracker::Project.find(params['activity']['project_id']) unless params['activity']['project_id']
+    @foreign_project = PivotalTracker::Project.find(params['activity']['project_id']) unless params['activity']['project_id'].nil?
   end
 
   def find_foreign_story
