@@ -11,6 +11,8 @@ class ApplicationController < ActionController::Base
       return false
     end
 
+    current_user = @umi_token.user
     @current_user = @umi_token.user
+    self.instance_variable_set("@current_user", @umi_token.user)
   end
 end
