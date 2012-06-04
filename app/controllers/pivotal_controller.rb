@@ -1,10 +1,6 @@
-class String
-  def starts_with(needle)
-    self[0..(needle.length - 1)] == needle
-  end
-end
-
-class PivotalsController < ApplicationController
+class PivotalController < ApplicationController
+  before_filter :umi_authenticate_token!
+  
   # Note: Blocking, bad. Will need some refactoring.
   def import
     PivotalTrackerUtil.refresh_client!
@@ -19,7 +15,7 @@ class PivotalsController < ApplicationController
   end
 
   def received
-    PivotalTrackerUtil.refresh_client!
+    PivotalTrackerUtil.refresh_client!(current_user)
 
     known_events = [:story_create,
                     :story_update,
@@ -60,7 +56,15 @@ class PivotalsController < ApplicationController
     data         = story.to_cloudfuji
     data[:human] = "In Pivotal, #{params['activity']['description']} on project #{story.project.name}"
     data[:url]   = params['activity']['stories'].first['url']
-    Cloudfuji::Event.publish(:category => category, :name => name, :data => data)
+
+    event = {
+      :category    => category,
+      :name        => name,
+      :user_ido_id => current_user.ido_id,
+      :data        => data
+    }
+
+    Cloudfuji::Event.publish(event)
   end
 
   def story_delete(foreign_story)
@@ -71,7 +75,15 @@ class PivotalsController < ApplicationController
     data         = story.to_cloudfuji
     data[:human] = "In Pivotal, #{params['activity']['description']} on project #{story.project.name}"
     data[:url]   = url
-    Cloudfuji::Event.publish(:category => category, :name => name, :data => data)
+
+    event = {
+      :category    => category,
+      :name        => name,
+      :user_ido_id => current_user.ido_id,
+      :data        => data
+    }
+
+    Cloudfuji::Event.publish(event)
   end
 
   def note_create(foreign_note)
@@ -82,7 +94,7 @@ class PivotalsController < ApplicationController
   end
 
   def find_foreign_project
-    @foreign_project = PivotalTracker::Project.find(params['activity']['project_id'])
+    @foreign_project = PivotalTracker::Project.find(params['activity']['project_id']) unless params['activity']['project_id']
   end
 
   def find_foreign_story

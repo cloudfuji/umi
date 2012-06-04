@@ -3,32 +3,51 @@
 <%= form_tag "/accounts" do %>
   <%= label_tag "Mailgun" %>
   <%= hidden_field_tag 'name', "mailgun" %>
-  <%= text_field_tag "api_key", @mailgun['api_key'] %>
+  <%= text_field_tag "api_key", @mailgun.settings['api_key'] %>
   <%= submit_tag "Save", :class => 'button hot' %>
+  <% if @mailgun.webhook_url %>
+  Use this as the mailgun webhook url: <%= @mailgun.webhook_url %>
+  <% end %>
 <% end %>
 
 <%= form_tag "/accounts" do %>
   <%= label_tag "Pivotal" %>
   <%= hidden_field_tag 'name', "pivotal" %>
-  <%= text_field_tag "api_key", @pivotal['api_key'] %>
+  <%= text_field_tag "api_key", @pivotal.settings['api_key'] %>
   <%= submit_tag "Save", :class => 'button hot' %>
   <%= link_to "Initial Import (may take awhile)", "/pivotal/import"  %>
+  <% if @pivotal.webhook_url %>
+  Use this as the Pivotal webhook url: <%= @pivotal.webhook_url %>
+  <% end %>
 <% end %>
 
 <%= form_tag "/accounts" do %>
   <%= label_tag "Wufoo" %>
   <%= hidden_field_tag 'name', "wufoo" %>
-  <%= text_field_tag "api_key", @wufoo['api_key'] %>
+  <%= text_field_tag "api_key", @wufoo.settings['api_key'] %>
   <%= submit_tag "Save", :class => 'button hot' %>
+  <% if @wufoo.webhook_url %>
+  Use this as the Wufoo webhook url: <%= @wufoo.webhook_url %>
+  <% end %>
+
 <% end %>
 
 <%= form_tag "/accounts" do %>
   <%= label_tag "Stripe" %>
   <%= hidden_field_tag 'name', "stripe" %>
-  <%= text_field_tag "api_key", @stripe['api_key'] %>
+  <%= text_field_tag "api_key", @stripe.settings['api_key'] %>
   <%= submit_tag "Save", :class => 'button hot' %>
+  <% if @stripe.webhook_url %>
+  Use this as the Stripe webhook url: <%= @stripe.webhook_url %>
+  <% end %>
+
 <% end %>
 
+<p>
+  <% if @github.webhook_url %>
+  Use this as the GitHub webhook url: <%= @github.webhook_url %>
+  <% end %>
+</p>
 
 <div id="custom_data" style="padding-top: 20px;">
   <h2>Custom data</h2>

@@ -2,6 +2,9 @@ require 'openssl'
 
 class MailgunController < ApplicationController
   before_filter :authenticate_request!
+  before_filter :umi_authenticate_token!
+
+  @@service = "mailgun"
 
   def notification
     known_events = [:opened,       :clicked,    :delivered,
@@ -21,9 +24,10 @@ class MailgunController < ApplicationController
     data = self.send(params["event"].to_sym)
 
     event = {
-      :category => "email",
-      :name     => params["event"],
-      :data     => data
+      :category    => "email",
+      :name        => params["event"],
+      :data        => data,
+      :user_ido_id => current_user.ido_id
     }
   end
 
@@ -102,11 +106,7 @@ class MailgunController < ApplicationController
     signature = params["signature"]
     digest    = OpenSSL::Digest::Digest.new('sha256')
 
-    return signature == OpenSSL::HMAC.hexdigest(digest, api_key, "#{timestamp}#{token}")
-  end
-
-  def api_key
-    ENV['MAILGUN_API_KEY']
+    return signature == OpenSSL::HMAC.hexdigest(digest, service_api_key, "#{timestamp}#{token}")
   end
 
   def authenticate_request!

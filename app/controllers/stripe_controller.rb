@@ -1,4 +1,8 @@
 class StripeController < ApplicationController
+  before_filter :umi_authenticate_token!
+
+  @@service = "stripe"
+
   def received
     data = Cloudfuji::Utils.normalize_keys(params)
 
@@ -6,6 +10,7 @@ class StripeController < ApplicationController
 
     method = data[:type].split(".")[0..-2].join("_").to_sym
     event  = self.send(method, data)
+    event[:user_ido_id] = current_user.ido_id
 
     puts event.inspect
 

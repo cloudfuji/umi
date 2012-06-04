@@ -1,7 +1,9 @@
 module Ido
   class EventProcessor
     class << self
-      def process_and_fire!(event)
+      def process_and_fire!(user, event)
+        event[:user_ido_id] = user.ido_id
+
         if _event = process(event)
           return fire(_event)
         else

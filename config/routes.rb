@@ -14,15 +14,12 @@ Umi::Application.routes.draw do
   match "/jenkins/notification" => 'jenkins#notification', :via => :post
   match "/stripe/received"      => 'stripe#received',      :via => :post
   match "/github/received"      => 'github#received',      :via => :post
+  match "/pivotal/received"     => 'pivotal#received',     :via => :post
+  match "/pivotal/import"       => 'pivotal#import',       :via => :get
   match "/events"               => 'events#create',        :via => [:post, :get]
   match "/ido_share"            => 'events#script',        :as => 'script'
 
   resources(:auth_tokens)
-
-  resource(:pivotal) do
-    post :received
-    get  :import
-  end
 
   resource(:accounts)
 

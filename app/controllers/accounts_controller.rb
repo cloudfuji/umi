@@ -2,24 +2,34 @@ class AccountsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @auth_token = AuthToken.find_by_name('ido_share')
+    @auth_token = current_user.auth_tokens.where(:name => 'ido_share').first
 
     if @auth_token.nil?
-      @auth_token = AuthToken.create_new!('ido_share', 'ido share starter')
+      @auth_token = current_user.auth_tokens.create_new!(current_user, 'ido_share', 'IdoShare starter')
+      puts "Auth token: #{@auth_token.inspect}"
+      puts "errors: #{@auth_token.errors.inspect}"
     end
-
-    @pivotal = Setting.first(:conditions => {:name => "pivotal"}).try(:settings) || {}
-    @mailgun = Setting.first(:conditions => {:name => "mailgun"}).try(:settings) || {}
-    @wufoo   = Setting.first(:conditions => {:name => "wufoo"  }).try(:settings) || {}
-    @stripe  = Setting.first(:conditions => {:name => "stripe" }).try(:settings) || {}
+    
+    @pivotal = current_user.settings_for("pivotal")
+    @mailgun = current_user.settings_for("mailgun")
+    @wufoo   = current_user.settings_for("wufoo"  )
+    @stripe  = current_user.settings_for("stripe" )
+    @github  = current_user.settings_for("github" )
   end
 
   def create
-    config = Setting.find_or_create_by(:name => params[:name])
-    config.settings = {:api_key => params[:api_key], :human_name => params[:name]}
+    config = current_user.settings.find_or_create_by(:name => params[:name])
+    config.settings ||= {}
+    config.settings['api_key'] = params[:api_key]
+    config.settings['human_name'] = params[:name]
+    config.auth_token ||= current_user.auth_tokens.create!(:name => params[:name], :description => params[:name])
     config.save
 
+    puts "Config: #{config.inspect}"
+
     flash[:notice] = "Ok, updated #{config.name}!"
+    puts "Config: #{config.inspect}"
+    puts "Config: #{config.errors.inspect}"
 
     redirect_to root_url
   end

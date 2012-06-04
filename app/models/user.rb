@@ -2,6 +2,10 @@ class User
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  has_many :auth_tokens
+  has_many :settings
+  has_many :pivotal_projects, :class_name => "Pivotal::Project"
+
   field :first_name
   field :last_name
   field :email
@@ -41,5 +45,9 @@ class User
     self.email      = extra_attributes["email"]
     self.locale     = extra_attributes["locale"]
     self.timezone   = extra_attributes["timezone"]
+  end
+
+  def settings_for(service_name)
+    settings.where(:name => service_name).first
   end
 end

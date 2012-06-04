@@ -19,7 +19,18 @@ module Pivotal
 
       data[:human] = human
 
-      Cloudfuji::Event.publish(:category => category, :name => name, :data => data)
+
+      event = {
+        :category    => category,
+        :name        => name,
+        :user_ido_id => self.user.ido_id,
+        :data        => data
+      }
+
+      puts "Broadcasting Event:"
+      puts event.inspect
+
+      # Cloudfuji::Event.publish(event)
     end
   end
 end
