@@ -30,7 +30,7 @@ module Pivotal
       puts "Broadcasting Event:"
       puts event.inspect
 
-      # Cloudfuji::Event.publish(event)
+      Cloudfuji::Event.publish(event)
     end
   end
 end
