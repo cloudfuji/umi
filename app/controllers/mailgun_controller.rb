@@ -98,6 +98,16 @@ class MailgunController < ApplicationController
       :human            => "Mail to #{params['recipient']} successfully delievered."
     }
   end
+
+  def unsubscribed
+    {
+      :recipient        => params["recipient"       ],
+      :domain           => params["domain"          ],
+      :tag              => params["tag"             ],
+      :custom_variables => params["custom-variables"],
+      :human            => "#{params['recipient']} unsubscribed from mailings from #{domain}."
+    }
+  end
   
   def verify
     token     = params["token"]
