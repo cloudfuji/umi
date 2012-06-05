@@ -16,6 +16,8 @@ class EventsController < ApplicationController
 
 
   def script
+    @auth_token = current_user.auth_tokens.find_by_name("ido_share").token
+
     response.headers["Last-Modified"] = Time.now.httpdate.to_s
     response.headers["Expires"] = 0.to_s
 
@@ -27,7 +29,5 @@ class EventsController < ApplicationController
     response.headers['Content-type'] = 'application/javascript; charset=utf-8'
     
     render :action => 'script', :layout => false, :content_type => 'text/javascript'
-
-    @auth_token = current_user.auth_tokens.find_by_name("ido_share").token
   end
 end
