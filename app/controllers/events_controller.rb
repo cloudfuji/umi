@@ -1,4 +1,6 @@
 class EventsController < ApplicationController
+  before_filter :umi_authenticate_token!
+
   # POST /events
   # Incoming requests are expected to be authenticated with an API token
   # Requests MUST have a `category` and `name`
@@ -26,6 +28,6 @@ class EventsController < ApplicationController
     
     render :action => 'script', :layout => false, :content_type => 'text/javascript'
 
-    @auth_token = current_user.auth_tokens.first.token
+    @auth_token = current_user.auth_tokens.find_by_name("ido_share").token
   end
 end
