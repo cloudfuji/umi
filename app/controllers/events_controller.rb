@@ -16,7 +16,7 @@ class EventsController < ApplicationController
 
 
   def script
-    @auth_token = current_user.auth_tokens.find_by_name("ido_share").token
+    @auth_token = current_user.auth_tokens.find_by_name("ido_share")
 
     response.headers["Last-Modified"] = Time.now.httpdate.to_s
     response.headers["Expires"] = 0.to_s
