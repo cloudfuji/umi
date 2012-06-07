@@ -6,9 +6,10 @@
   <%= text_field_tag "api_key", @mailgun.settings['api_key'] %>
   <%= submit_tag "Save", :class => 'button hot' %>
   <% if @mailgun.webhook_url %>
-  Use this as the mailgun webhook url: <%= @mailgun.webhook_url %>
+  <br/>Use this as the mailgun webhook url: <%= link_to @mailgun.webhook_url %>
   <% end %>
 <% end %>
+<br/>
 
 <%= form_tag "/accounts" do %>
   <%= label_tag "Pivotal" %>
@@ -17,9 +18,10 @@
   <%= submit_tag "Save", :class => 'button hot' %>
   <%= link_to "Initial Import (may take awhile)", "/pivotal/import"  %>
   <% if @pivotal.webhook_url %>
-  Use this as the Pivotal webhook url: <%= @pivotal.webhook_url %>
+  <br/>Use this as the Pivotal webhook url: <%= link_to @pivotal.webhook_url %>
   <% end %>
 <% end %>
+<br/>
 
 <%= form_tag "/accounts" do %>
   <%= label_tag "Wufoo" %>
@@ -27,10 +29,11 @@
   <%= text_field_tag "api_key", @wufoo.settings['api_key'] %>
   <%= submit_tag "Save", :class => 'button hot' %>
   <% if @wufoo.webhook_url %>
-  Use this as the Wufoo webhook url: <%= @wufoo.webhook_url %>
+  <br/>Use this as the Wufoo webhook url: <%= link_to @wufoo.webhook_url %>
   <% end %>
 
 <% end %>
+<br/>
 
 <%= form_tag "/accounts" do %>
   <%= label_tag "Stripe" %>
@@ -38,14 +41,25 @@
   <%= text_field_tag "api_key", @stripe.settings['api_key'] %>
   <%= submit_tag "Save", :class => 'button hot' %>
   <% if @stripe.webhook_url %>
-  Use this as the Stripe webhook url: <%= @stripe.webhook_url %>
+  <br/>Use this as the Stripe webhook url: <%= link_to @stripe.webhook_url %>
   <% end %>
-
 <% end %>
+<br/>
+
+<%= form_tag "/accounts" do %>
+  <%= label_tag "Mailchimp" %>
+  <%= hidden_field_tag 'name', "mailchimp" %>
+  <%= text_field_tag "api_key", @mailchimp.settings['api_key'] %>
+  <%= submit_tag "Save", :class => 'button hot' %>
+  <% if @mailchimp.webhook_url %>
+  <br/>Use this as the Mailchimp webhook url: <%= link_to @mailchimp.webhook_url %>
+  <% end %>
+<% end %>
+<br/>
 
 <p>
   <% if @github.webhook_url %>
-  Use this as the GitHub webhook url: <%= @github.webhook_url %>
+  <br/>Use this as the GitHub webhook url: <%= link_to @github.webhook_url %>
   <% end %>
 </p>
 
@@ -53,7 +67,7 @@
   <h2>Custom data</h2>
   <h3>Include ido_share.js</h3>
   <p>Already using Google Analytics or Mixpanel? Great.</br>
-    Just drop this IdoShare script into your page <strong>After those libraries</strong> and it will start collecting your exisiting events.</p>
+    Just drop this IdoShare script into your page <strong>after those libraries</strong> and it will start collecting your existing events.</p>
  <pre>
   &lt;script type="text/javascript"&gt;Your Google Analytics Code&lt;/script&gt;
   &lt;script type="text/javascript"&gt;Your Mixpanel Code&lt;/script&gt;

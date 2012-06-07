@@ -7,7 +7,7 @@ class Setting
 
   field :name,       :type => String
   field :human_name, :type => String
-  field :settings,   :type => Hash
+  field :settings,   :type => Hash, :default => {}
 
   validates_uniqueness_of :name, :scope => :user_id
 
@@ -18,6 +18,7 @@ class Setting
   def webhook_url(host = "cloudfujiapp.com")
     paths = {
       "mailgun"   => "/mailgun/notification",
+      "mailchimp" => "/mailchimp/notification",
       "jenkins"   => "/jenkins/notification",
       "stripe"    => "/stripe/received",
       "github"    => "/github/received",

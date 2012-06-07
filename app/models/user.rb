@@ -11,7 +11,7 @@ class User
   field :email
   field :locale
   field :ido_id,    :type    => String
-  field :admin,     :type    => Boolean, :default => true  
+  field :admin,     :type    => Boolean, :default => true
   field :timezone,  :default => "UTC"
   field :authentication_token
 
@@ -48,6 +48,6 @@ class User
   end
 
   def settings_for(service_name)
-    settings.where(:name => service_name).first
+    settings.where(:name => service_name).first || Setting.new
   end
 end

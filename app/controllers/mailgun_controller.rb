@@ -9,7 +9,7 @@ class MailgunController < ApplicationController
     known_events = [:opened,       :clicked,    :delivered,
                     :unsubscribed, :complained,
                     :bounced,      :dropped]
-    
+
     return render(:status => 400) unless known_events.include?(params["event"].to_sym)
 
     Cloudfuji::Event.publish(event)
@@ -55,12 +55,6 @@ class MailgunController < ApplicationController
     data
   end
 
-  def unsubscribe
-    data = base
-    data[:human] = "#{data[:recipient]} unsubscribed from mailings in campaign #{data[:campaign_name]}"
-    data
-  end
-
   def complained
     data = base
     data[:message_headers] = params["message_headers"]
@@ -87,7 +81,7 @@ class MailgunController < ApplicationController
       :human            => "Mail to #{params['recipient']} could not be delivered (#{params['reason']}) because #{params['description']}"
     }
   end
-  
+
   def delivered
     {
       :recipient        => params["recipient"       ],
@@ -105,10 +99,10 @@ class MailgunController < ApplicationController
       :domain           => params["domain"          ],
       :tag              => params["tag"             ],
       :custom_variables => params["custom-variables"],
-      :human            => "#{params['recipient']} unsubscribed from mailings from #{domain}."
+      :human            => "#{params['recipient']} unsubscribed from mailings in campaign #{params["campaign-name"]} from #{params["domain"]}."
     }
   end
-  
+
   def verify
     token     = params["token"]
     timestamp = params["timestamp"]

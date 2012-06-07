@@ -9,20 +9,23 @@ class AccountsController < ApplicationController
       puts "Auth token: #{@auth_token.inspect}"
       puts "errors: #{@auth_token.errors.inspect}"
     end
-    
-    @pivotal = current_user.settings_for("pivotal")
-    @mailgun = current_user.settings_for("mailgun")
-    @wufoo   = current_user.settings_for("wufoo"  )
-    @stripe  = current_user.settings_for("stripe" )
-    @github  = current_user.settings_for("github" )
+
+    %w(pivotal mailgun wufoo stripe github mailchimp).each do |service|
+      instance_variable_set("@#{service}", current_user.settings_for(service))
+    end
   end
 
   def create
     config = current_user.settings.find_or_create_by(:name => params[:name])
-    config.settings ||= {}
-    config.settings['api_key'] = params[:api_key]
-    config.settings['human_name'] = params[:name]
-    config.auth_token ||= current_user.auth_tokens.create!(:name => params[:name], :description => params[:name])
+    if params[:api_key].present?
+      config.settings['api_key'] = params[:api_key]
+      config.settings['human_name'] = params[:name]
+      config.auth_token ||= current_user.auth_tokens.create!(:name => params[:name], :description => params[:name])
+    else
+      # Delete settings and auth token if api_key is blank
+      config.settings = {}
+      config.auth_token = nil
+    end
     config.save
 
     puts "Config: #{config.inspect}"
