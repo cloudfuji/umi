@@ -15,7 +15,7 @@ class Setting
     self.first(:conditions => {:name => resource})
   end
 
-  def webhook_url(host = "cloudfujiapp.com")
+  def webhook_url(host = (ENV["CLOUDFUJI_DOMAIN"] || "cloudfujiapp.com"))
     paths = {
       "mailgun"   => "/mailgun/notification",
       "mailchimp" => "/mailchimp/notification",
