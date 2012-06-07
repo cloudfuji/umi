@@ -27,7 +27,9 @@ class EventsController < ApplicationController
     # HTTP 1.1 'pre-check=0, post-check=0' (IE specific)
     response.headers["Cache-Control"] = 'no-store, no-cache, must-revalidate, max-age=0, pre-check=0, post-check=0'
     response.headers['Content-type'] = 'application/javascript; charset=utf-8'
-    
-    render :action => 'script', :layout => false, :content_type => 'text/javascript'
+
+    respond_to do |format|
+      format.js { return render :action => 'script', :layout => false, :content_type => 'text/javascript' }
+    end
   end
 end
