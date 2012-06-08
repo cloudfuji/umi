@@ -89,7 +89,7 @@ class MailchimpController < ApplicationController
       :merges           => data['merges'],
       :ip_opt           => params['ip_opt'],
       :ip_signup        => params['ip_signup'],
-      :human            => "#{data[:email]} subscribed to Mailchimp list with ID #{data['list_id']}"
+      :human            => "#{data['email']} subscribed to Mailchimp list with ID #{data['list_id']}"
     }
   end
 
@@ -118,7 +118,7 @@ class MailchimpController < ApplicationController
       :merges           => data['merges'],
       :ip_opt           => params['ip_opt'],
       :campaign_id      => data['campaign_id'],
-      :human            => "#{data[:email]} unsubscribed from Mailchimp list with ID #{data['list_id']}"
+      :human            => "#{data['email']} unsubscribed from Mailchimp list with ID #{data['list_id']}"
     }
   end
 
@@ -142,7 +142,7 @@ class MailchimpController < ApplicationController
       :email_type       => data['email_type'],
       :merges           => data['merges'],
       :ip_opt           => params['ip_opt'],
-      :human            => "#{data[:email]} updated Mailchimp profile information."
+      :human            => "#{data['email']} updated Mailchimp profile information."
     }
   end
 
@@ -159,7 +159,7 @@ class MailchimpController < ApplicationController
       :new_mailchimp_id => data['id'],
       :new_email        => data['new_email'],
       :old_email        => data['old_email'],
-      :human            => "#{data[:email]} updated their email address on Mailchimp, from '#{data['old_email']}' to '#{data['new_email']}'."
+      :human            => "#{data['email']} updated their email address on Mailchimp, from '#{data['old_email']}' to '#{data['new_email']}'."
     }
   end
 
@@ -176,7 +176,7 @@ class MailchimpController < ApplicationController
       :campaign_id      => data['campaign_id'],
       :email            => data['email'],
       :reason           => data['reason'],
-      :human            => "#{data[:email]} was cleaned from Mailchimp list with ID #{data['list_id']}. Reason: '#{data['reason']}'"
+      :human            => "#{data['email']} was cleaned from Mailchimp list with ID #{data['list_id']}. Reason: '#{data['reason']}'"
     }
   end
 
