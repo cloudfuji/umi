@@ -1,0 +1,91 @@
+<div id="tab1" class="tab_content">
+  <div id="showcase_padd" class="info_holder">
+    <div class="clearfix" style="overflow:hidden;">
+      <div id="feature">
+	<%= image_tag @project.thumbnail.url(:large) %>
+      </div>
+
+      <div id="launch_holder">
+	<%= link_to "", "http://cloudfuji.com/apps/new?repo=#{@project.source_url}", :id=>"launch", :target=> "_top" %>
+      </div>
+
+      <div id="feature_description">
+	<p class="feature_title"><%= @project.title %></p>
+	<p class="feature_discription"><%= @project.short_desc %></p>
+	<p class="feature_info"><%= @project.about %></p>
+      </div>
+    </div>
+
+    <div id="screenshots">
+
+      <div id="slides">
+	<div class="slides_container">
+	  <%-#assuming here that there's atleast one screenshot %>
+	  <%- @first_id = @project.screenshots.first.id %>
+	  <%- @project.screenshots.each do |s| %>
+          <%- if s.id == @first_id %>
+	  <div><%= image_tag s.image.url(:large), :class=>"active" %></div>
+          <%- else %>
+	  <div><%= image_tag s.image.url(:large) %></div>
+	  <% end %>
+	  <% end %>
+        </div><!--closes slide_container -->
+	<% unless @project.screenshots.length < 2 %>
+	  <div id="arrow_holder" style="margin-top:10px;left:0;">
+	   <a href="#" class="prev"><img src="/images/arrow-prev.png" alt="Arrow Prev"></a>
+	   <a href="#" class="next"><img src="/images/arrow-next.png" alt="Arrow Next"></a>
+	 </div>
+	 <% end %>
+      </div><!-- slides -->
+    </div>
+
+    <div id="launch_holder" style="float:left;margin:0 auto;display:block;margin-top:50px;position:relative;right:82px;">
+      <%= link_to "", "http://cloudfuji.com/apps/new?repo=#{@project.source_url}", :id=>"launch", :target=> "_top" %>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- <div id="tab3" class="tab_content"> -->
+<!--   <div id="showcase_padd"> -->
+    
+<!--     <%- @projects_count = @similar_projects.count %> -->
+<!--     <%- @counter = 0 %> -->
+    
+<!--     <%- if @projects_count != 0 %> -->
+
+<!--     <%- @similar_projects.each do |p| %> -->
+<!--     <%- if @counter == 0 or (@counter % 3)==0 %> -->
+<!--     <div class="showcase_row"> -->
+<!--       <%- end %> -->
+<!--       <%- if @counter+1 <7 %> -->
+<!--           <div class="app_logo"> -->
+<!--             <%= link_to image_tag(p.thumbnail.url(:medium)), "/external/#{p.slug}" %> -->
+<!--           </div> -->
+<!--           <div class="app_discription"> -->
+<!--             <p class="title"><%= link_to p.title, "/external/#{p.slug}" %></p> -->
+<!--             <p class="subtitle"><%= p.project_category.name %></p><br/> -->
+<!--             <p class="discription"><%= p.short_desc %></p> -->
+<!--           </div> -->
+<!-- 	  <%- end %> -->
+<!--           <%- if (@projects_count == @counter + 1) %> -->
+<!--     </div> -->
+<!--     <%- elsif (@counter+1)%3 == 0 %> -->
+<!--   </div> -->
+<!--   <%- if (@counter+1)%6 != 0 %> -->
+<!--   <div class="line_break"></div> -->
+<!--   <% end %> -->
+<!--   <%- end %> -->
+<!--   <%- @counter = @counter.next %> -->
+<!--   <%- end %> -->
+<!--   <%- else %> -->
+<!--   <p class="info_brown" style="margin-top:170px;">Currently there are no similar projects</p> -->
+<!--   <%- end %> -->
+  
+<!-- </div> -->
+
+
+
+

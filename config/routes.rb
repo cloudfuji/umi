@@ -16,6 +16,10 @@ Umi::Application.routes.draw do
   match "/events"    => 'events#create',        :via => [:post, :get]
   match "/ido_share" => 'events#script', :as => 'script'
 
+  match '/external' => 'external#index'
+  match '/external/:id' => 'external#show'  
+  match '/proxy'=> 'external#proxy'
+
   resources(:auth_tokens)
 
   resource(:pivotal) do
