@@ -1,5 +1,5 @@
 class MailchimpController < ApplicationController
-  before_filter :umi_authenticate_token!
+  before_filter :umi_authenticate_token!, :except => [:refresh_lists]
 
   def notification
     known_event_types = [:subscribe,
@@ -21,7 +21,27 @@ class MailchimpController < ApplicationController
     render :json => "ok", :status => 200
   end
 
+  # Fetch and store Mailchimp Lists, Groupings and Groups
+  def refresh_lists
+    settings = current_user.settings_for("mailchimp")
+    unless settings && settings.settings["api_key"]
+      flash[:warning] = "You need to configure your Mailchimp API key!"
+      redirect_to(root_url) and return
+    end
+    counts = Mailchimp.refresh_lists_for(current_user)
+
+    flash[:notice] = "Successfully cached #{pluralize counts[:lists], 'list'}, #{pluralize counts[:groupings], 'grouping'}, and #{pluralize counts[:groups], 'group'}."
+    redirect_to(root_url)
+  end
+
   private
+
+  class TextHelper
+    include Singleton; include ActionView::Helpers::TextHelper
+  end
+  def pluralize(*args)
+    TextHelper.instance.pluralize(*args)
+  end
 
   def event
     # Conform event categories and names

@@ -1,6 +1,6 @@
 class PivotalController < ApplicationController
-  before_filter :umi_authenticate_token!
-  
+  before_filter :umi_authenticate_token!, :except => [:import]
+
   # Note: Blocking, bad. Will need some refactoring.
   def import
     PivotalTrackerUtil.refresh_client!

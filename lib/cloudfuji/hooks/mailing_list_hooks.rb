@@ -15,43 +15,30 @@ class MailingListHooks < Cloudfuji::EventObserver
     settings = settings ? settings.settings : {}
     # Initialize Mailchimp API
     mc = Mailchimp::API.new(settings["api_key"])
-    # Fetch lists from Mailchimp
-    lists = mc.lists
-    # Find configured list (for id)
-    list = lists['data'].detect {|l| l['name'].downcase == data["mailing_list"].strip.downcase }
+    # Find list in cached lists. If not present, refresh and try again
+    list =  Mailchimp.find_list_or_refresh(data["mailing_list"].strip, user)
     raise "List '#{data["mailing_list"]}' could not be found on MailChimp account!" unless list
 
     # Find interest grouping
-    groupings = mc.listInterestGroupings(:id => list['id'])
-    grouping = groupings.detect do |g|
-      g["name"].downcase == data["mailing_list_grouping"].strip.downcase
-    end
+    grouping = Mailchimp.find_interest_grouping_or_refresh(list, data["mailing_list_grouping"].strip, user)
+
     if grouping
-      # If grouping exists, find or create group if doesn't exist
-      unless grouping['groups'].detect {|g| g["name"].downcase == data["mailing_list_group"].strip.downcase }
-        puts "Group '#{data["mailing_list_group"]}' not found on interest grouping '#{data["mailing_list_grouping"]}'. Creating..."
-        mc.listInterestGroupAdd(:id => list['id'], :group_name => data["mailing_list_group"], :grouping_id => grouping["id"])
-      end
+      # Create group if doesn't exist on grouping
+      Mailchimp.find_or_create_interest_group_by_name grouping, data["mailing_list_group"].strip, user
     else
       # Create interest grouping (including group) if grouping doesn't exist
       puts "Interest Grouping '#{data["mailing_list_grouping"]}' not found. Creating with initial group '#{data["mailing_list_group"]}'..."
-      grouping = { 'id' => mc.listInterestGroupingAdd(
-        :id     => list['id'],
-        :name   => data["mailing_list_grouping"],
-        :type   => "checkboxes",
-        :groups => [ data["mailing_list_group"] ]
-      )}
+      grouping = Mailchimp.create_interest_grouping_for_list(list, data["mailing_list_grouping"], [data["mailing_list_group"]], user)
     end
 
     # Add group to email
     puts "Adding #{data["email"]} to group '#{data["mailing_list_group"]}' under grouping '#{data["mailing_list_grouping"]}'..."
     mc.listUpdateMember(
-      :id => list['id'],
+      :id => list.list_id,
       :email_address => data["email"],
-      :merge_vars => {'GROUPINGS' => [ {'id' => grouping["id"], 'groups' => data["mailing_list_group"]} ] },
+      :merge_vars => {'GROUPINGS' => [ {'id' => grouping.grouping_id, 'groups' => data["mailing_list_group"]} ] },
       :email_type => "",
       :replace_interests => false
     )
   end
-
 end

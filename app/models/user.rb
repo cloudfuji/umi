@@ -5,6 +5,7 @@ class User
   has_many :auth_tokens
   has_many :settings
   has_many :pivotal_projects, :class_name => "Pivotal::Project"
+  has_many :mailchimp_lists,  :class_name => "Mailchimp::List"
 
   field :first_name
   field :last_name
