@@ -25,6 +25,10 @@ module Pivotal
       "project_task_note"
     end
 
+    def user
+      self.story.project.user
+    end
+
     def from_pivotal(foreign_note)
       self.text                = foreign_note.text
       self.author              = User.find_by_full_name(foreign_note.author).try(:ido_id) || foreign_note.author

@@ -8,29 +8,29 @@ module Pivotal
     belongs_to :project, :inverse_of => :stories, :class_name => "Pivotal::Project"
     has_many :notes, :class_name => "Pivotal::Note"
 
-    field :url,            :type => String
-    field :created_at,     :type => DateTime
-    field :accepted_at,    :type => DateTime
-    field :external_project_id,     :type => Integer
-    field :name,           :type => String
-    field :description,    :type => String
-    field :story_type,     :type => String
-    field :estimate,       :type => Integer
-    field :current_state,  :type => String
-    field :requested_by,   :type => String
-    field :owned_by,       :type => String
-    field :labels,         :type => String
-    field :jira_id,        :type => Integer
-    field :jira_url,       :type => Integer
-    field :other_id,       :type => Integer
-    field :integration_id, :type => Integer
-    field :deadline,       :type => DateTime
-    field :attachments,    :type => Array
-    field :external_id,    :type => Integer
+    field :url,                 :type => String
+    field :created_at,          :type => DateTime
+    field :accepted_at,         :type => DateTime
+    field :external_project_id, :type => Integer
+    field :name,                :type => String
+    field :description,         :type => String
+    field :story_type,          :type => String
+    field :estimate,            :type => Integer
+    field :current_state,       :type => String
+    field :requested_by,        :type => String
+    field :owned_by,            :type => String
+    field :labels,              :type => String
+    field :jira_id,             :type => Integer
+    field :jira_url,            :type => Integer
+    field :other_id,            :type => Integer
+    field :integration_id,      :type => Integer
+    field :deadline,            :type => DateTime
+    field :attachments,         :type => Array
+    field :external_id,         :type => Integer
 
     # Cloudfuji Fields
-    field :ido_id,         :type => String
-    field :announced,      :type => Boolean
+    field :ido_id,              :type => String
+    field :announced,           :type => Boolean
 
     validates_uniqueness_of :external_id
 
@@ -40,6 +40,10 @@ module Pivotal
 
     def ido_schema_class
       "project_task"
+    end
+
+    def user
+      self.project.user
     end
 
     # This could benefit from some regularization/metaprogramming

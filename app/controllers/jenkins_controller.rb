@@ -1,4 +1,6 @@
 class JenkinsController < ApplicationController
+  before_filter :umi_authenticate_token!
+
   def notification
     puts params.inspect
 
@@ -33,9 +35,11 @@ class JenkinsController < ApplicationController
                      data["build"]["status"]
                    end
 
-    puts event.inspect
+    event[:user_ido_id] = current_user.ido_id
 
     event[:data][:human] = "Build #{data['name']} ##{data['build']['number']} has #{event[:name]}"
+    
+    puts event.inspect
 
     Cloudfuji::Event.publish(event)
 

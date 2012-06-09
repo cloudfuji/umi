@@ -3,38 +3,101 @@
 <%= form_tag "/accounts" do %>
   <%= label_tag "Mailgun" %>
   <%= hidden_field_tag 'name', "mailgun" %>
-  <%= text_field_tag "api_key", @mailgun['api_key'] %>
+  <%= text_field_tag "api_key", @mailgun.settings['api_key'] %>
   <%= submit_tag "Save", :class => 'button hot' %>
+  <% if @mailgun.webhook_url %>
+  <br/>Use this as the mailgun webhook url: <%= link_to @mailgun.webhook_url %>
+  <% end %>
 <% end %>
+<br/>
 
 <%= form_tag "/accounts" do %>
   <%= label_tag "Pivotal" %>
   <%= hidden_field_tag 'name', "pivotal" %>
-  <%= text_field_tag "api_key", @pivotal['api_key'] %>
+  <%= text_field_tag "api_key", @pivotal.settings['api_key'] %>
   <%= submit_tag "Save", :class => 'button hot' %>
-  <%= link_to "Initial Import (may take awhile)", "/pivotal/import"  %>
+  <% if @pivotal.settings['api_key'].present? %>
+    | <%= link_to "Initial Import (may take awhile)", "/pivotal/import"  %>
+  <% end %>
+  <% if @pivotal.webhook_url %>
+  <br/>Use this as the Pivotal webhook url: <%= link_to @pivotal.webhook_url %>
+  <% end %>
 <% end %>
+<br/>
 
 <%= form_tag "/accounts" do %>
   <%= label_tag "Wufoo" %>
   <%= hidden_field_tag 'name', "wufoo" %>
-  <%= text_field_tag "api_key", @wufoo['api_key'] %>
+  <%= text_field_tag "api_key", @wufoo.settings['api_key'] %>
   <%= submit_tag "Save", :class => 'button hot' %>
+  <% if @wufoo.webhook_url %>
+  <br/>Use this as the Wufoo webhook url: <%= link_to @wufoo.webhook_url %>
+  <% end %>
+
 <% end %>
+<br/>
 
 <%= form_tag "/accounts" do %>
   <%= label_tag "Stripe" %>
   <%= hidden_field_tag 'name', "stripe" %>
-  <%= text_field_tag "api_key", @stripe['api_key'] %>
+  <%= text_field_tag "api_key", @stripe.settings['api_key'] %>
   <%= submit_tag "Save", :class => 'button hot' %>
+  <% if @stripe.webhook_url %>
+  <br/>Use this as the Stripe webhook url: <%= link_to @stripe.webhook_url %>
+  <% end %>
 <% end %>
+<br/>
 
+<%= form_tag "/accounts" do %>
+  <%= label_tag "Mailchimp" %>
+  <%= hidden_field_tag 'name', "mailchimp" %>
+  <%= text_field_tag "api_key", @mailchimp.settings['api_key'] %>
+  <%= submit_tag "Save", :class => 'button hot' %>
+  <% if @mailchimp.settings['api_key'].present? %>
+    | <%= link_to "Refresh cached Lists, Groupings & Groups", "/mailchimp/refresh_lists"  %>
+  <% end %>
+  <br/><br/>
+
+  <% mailchimp_lists = current_user.mailchimp_lists %>
+  <% if mailchimp_lists.none? %>
+    No cached Mailchimp data.
+  <% else %>
+    <strong><a href="#mailchimp_lists" onclick="$('#mailchimp_lists').show(); $(this).hide();">Show cached Mailchimp lists</a></strong><br/>
+    <div id="mailchimp_lists" style="display: none;">
+    Key: <ul><li><strong>Lists</strong><ul><li><strong>Groupings</strong><ul><li><strong>Groups</strong></li></ul></li></ul></li></ul>
+    <br/>
+    <ul>
+      <% current_user.mailchimp_lists.each do |list| %>
+        <li><%= list.name %>
+          <ul><% list.interest_groupings.each do |grouping| %>
+            <li><%= grouping.name %>
+              <ul><% grouping.interest_groups.each do |group| %>
+                <li><%= group.name %></li>
+              <% end %></ul>
+            </li>
+          <% end %></ul>
+        </li>
+      <% end %></ul>
+    </div>
+  <% end %>
+
+  <% if @mailchimp.webhook_url %>
+  <br/>Use this as the Mailchimp webhook url: <%= link_to @mailchimp.webhook_url %>
+  <% end %>
+<% end %>
+<br/>
+
+<p>
+  <% if @github.webhook_url %>
+  <br/>Use this as the GitHub webhook url: <%= link_to @github.webhook_url %>
+  <% end %>
+</p>
 
 <div id="custom_data" style="padding-top: 20px;">
   <h2>Custom data</h2>
   <h3>Include ido_share.js</h3>
   <p>Already using Google Analytics or Mixpanel? Great.</br>
-    Just drop this IdoShare script into your page <strong>After those libraries</strong> and it will start collecting your exisiting events.</p>
+    Just drop this IdoShare script into your page <strong>after those libraries</strong> and it will start collecting your existing events.</p>
  <pre>
   &lt;script type="text/javascript"&gt;Your Google Analytics Code&lt;/script&gt;
   &lt;script type="text/javascript"&gt;Your Mixpanel Code&lt;/script&gt;

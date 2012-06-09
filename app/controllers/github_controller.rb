@@ -1,4 +1,8 @@
-class GithubsController < ApplicationController
+class GithubController < ApplicationController
+  before_filter :umi_authenticate_token!
+
+  @@service = "github"
+
   def received
     puts params.inspect
     payload = params[:payload]
@@ -21,6 +25,8 @@ class GithubsController < ApplicationController
     branch    = payload[:ref].split("/").last
 
     event[:data][:human] = "#{actor} pushed to #{repo_name}/#{branch}, saying '#{message}' -> See more at #{url}"
+
+    event[:user_ido_id] = current_user.ido_id
 
     puts event.inspect
 

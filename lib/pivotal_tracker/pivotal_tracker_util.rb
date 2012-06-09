@@ -1,21 +1,22 @@
 class PivotalTrackerUtil
   class << self
 
-    def refresh_client!
-      PivotalTracker::Client.token = ENV['PIVOTAL_API_KEY'] || Setting.for('pivotal').settings['api_key']
+    def refresh_client!(user)
+      # Thread-safe-what?? :(
+      PivotalTracker::Client.token = user.settings_for('pivotal').settings['api_key']
     end
 
-    def projects
-      refresh_client!
+    def projects(user)
+      refresh_client!(user)
 
       PivotalTracker::Project
     end
 
-    def import_initial!
-      refresh_client!
+    def import_initial!(user)
+      refresh_client!(user)
 
-      projects.all.each do |project|
-        if create_bcloudfuji_project(project)
+      projects(user).all.each do |project|
+        if create_cloudfuji_project(user, project)
 
           project.stories.all.each do |story|
             if create_cloudfuji_story(project, story)
@@ -29,10 +30,11 @@ class PivotalTrackerUtil
       end
     end
 
-    def create_cloudfuji_project(foreign_project)
+    def create_cloudfuji_project(user, foreign_project)
       project    = Pivotal::Project.find_or_initialize_by(:external_id => foreign_project.id)
       new_record = project.new_record?
       project.from_pivotal(foreign_project)
+      project.user = user
 
       puts project.inspect
       result = project.save

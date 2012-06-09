@@ -5,6 +5,7 @@ module Pivotal
 
     include Pivotal::Common
 
+    belongs_to :user, :inverse_of => :pivotal_projects, :class_name => "User"
     has_many :stories, :class_name => "Pivotal::Story"
 
     field :week_start_day,      :type => Integer

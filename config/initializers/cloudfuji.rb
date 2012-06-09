@@ -1,3 +1,5 @@
+require './lib/cloudfuji/cloudfuji'
+
 module Cloudfuji
   class Ido
     class << self

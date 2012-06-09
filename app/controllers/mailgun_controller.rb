@@ -1,13 +1,15 @@
 require 'openssl'
 
-class MailgunsController < ApplicationController
+class MailgunController < ApplicationController
+  before_filter :umi_authenticate_token!
   before_filter :authenticate_request!
+
 
   def notification
     known_events = [:opened,       :clicked,    :delivered,
                     :unsubscribed, :complained,
                     :bounced,      :dropped]
-    
+
     return render(:status => 400) unless known_events.include?(params["event"].to_sym)
 
     Cloudfuji::Event.publish(event)
@@ -21,9 +23,10 @@ class MailgunsController < ApplicationController
     data = self.send(params["event"].to_sym)
 
     event = {
-      :category => "email",
-      :name     => params["event"],
-      :data     => data
+      :category    => "email",
+      :name        => params["event"],
+      :data        => data,
+      :user_ido_id => current_user.ido_id
     }
   end
 
@@ -49,12 +52,6 @@ class MailgunsController < ApplicationController
     data = base
     data[:url]   = params["url"]
     data[:human] = "#{data[:recipient]} clicked on link in #{data[:campaign_name]} to #{data[:url]}"
-    data
-  end
-
-  def unsubscribe
-    data = base
-    data[:human] = "#{data[:recipient]} unsubscribed from mailings in campaign #{data[:campaign_name]}"
     data
   end
 
@@ -84,7 +81,7 @@ class MailgunsController < ApplicationController
       :human            => "Mail to #{params['recipient']} could not be delivered (#{params['reason']}) because #{params['description']}"
     }
   end
-  
+
   def delivered
     {
       :recipient        => params["recipient"       ],
@@ -95,21 +92,35 @@ class MailgunsController < ApplicationController
       :human            => "Mail to #{params['recipient']} successfully delievered."
     }
   end
-  
+
+  def unsubscribed
+    {
+      :recipient        => params["recipient"       ],
+      :domain           => params["domain"          ],
+      :tag              => params["tag"             ],
+      :custom_variables => params["custom-variables"],
+      :human            => "#{params['recipient']} unsubscribed from mailings in campaign #{params["campaign-name"]} from #{params["domain"]}."
+    }
+  end
+
   def verify
     token     = params["token"]
     timestamp = params["timestamp"]
     signature = params["signature"]
     digest    = OpenSSL::Digest::Digest.new('sha256')
 
-    return signature == OpenSSL::HMAC.hexdigest(digest, api_key, "#{timestamp}#{token}")
-  end
+    puts "Digest: #{digest}"
+    puts "API Key: #{service_api_key}"
+    puts "#{timestamp}#{token}"
 
-  def api_key
-    ENV['MAILGUN_API_KEY']
+    return signature == OpenSSL::HMAC.hexdigest(digest, service_api_key, "#{timestamp}#{token}")
   end
 
   def authenticate_request!
-    return render(:status => 401) unless verify
+    return render(:layout => false, :json => "Mailgun token not verified", :status => 401) unless verify
+  end
+
+  def service_api_key
+    current_user.settings_for("mailgun").settings['api_key']
   end
 end
