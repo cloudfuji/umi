@@ -6,4 +6,38 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require_tree .
+
+
+    function scaleModal(){
+	//for remote modal requests
+	if(typeof window.parent.rpc != 'undefined'){
+	    window.parent.rpc.resizeModal($main.outerWidth(), $main.innerHeight());
+	}
+
+	//for local modal requests
+	if(typeof window.parent.$ != 'undefined'){
+	    if(typeof window.parent.$.colorbox != 'undefined'){
+		window.parent.$.colorbox.resize({
+		    width: $main.outerWidth() 
+		    ,height: $main.innerHeight()
+		    ,scrolling: false
+		});
+	    }
+	}
+    };
+
+$(function(){
+  //
+  //do some scaling magic for modals
+  //
+  if(window.location != window.parent.location){
+    $main = $('#main');
+        
+    //best to have all the content loaded so we know the true height
+    window.onload =  scaleModal;
+    
+    //if the dom gets expanded scale the modal again
+    document.addEventListener("DOMNodeInserted", scaleModal);
+      
+  }
+});

@@ -1,38 +1,73 @@
 <!doctype html>  
- 
+
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
-<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]--> 
-<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]--> 
-<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]--> 
-<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]--> 
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]--> 
-  <head>  
-    <title>Open Source Rails</title> 
-    <%= stylesheet_link_tag :reset_styles %>
-    <%= stylesheet_link_tag :main %>
-    <link href="/colorbox/example2/colorbox.css" media="screen" rel="stylesheet" type="text/css" /> 
-    <%= javascript_include_tag :application %>
-    <script type="text/javascript" src="/colorbox/colorbox/jquery.colorbox.js"></script>
-    <%= stylesheet_link_tag "validationEngine.jquery.css" %>
-    <%= yield(:head) %>
-    <script type="text/javascript">
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
 
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-32378289-1']);
-      _gaq.push(['_trackPageview']);
+<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame 
+     Remove this if you use the .htaccess -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-      (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
+<title>Cloudfuji | IdoShare</title>
+<meta name="description" content="">
+<meta name="author" content="">
 
-    </script>
-  </head>
-  <body class="no_background external<%= (params[:video]) ? ' video' : '' %>">
-      <div id="main" class="no_margin">
-  	    <%= yield %>
+<!--  Mobile viewport optimized: j.mp/bplateviewport -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Place favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+<link rel="shortcut icon" href="http://cloudfuji.com/faviconred-w.png">
+<link rel="apple-touch-icon" href="http://cloudfuji.com/apple-touch-icon.png" >
+
+<%= stylesheet_link_tag "application" %>
+<link rel="stylesheet" href="http://cloudfuji.com/javascripts/vendor/jquery.terminal/css/jquery.terminal.css">
+<link href="http://cloudfuji.com/packages/common.css?1332781698" media="all" rel="stylesheet" type="text/css" />
+
+<!--[if IE]>
+<link href="http://cloudfuji.com/stylesheets/ie.css?1330970594" media="screen, projection" rel="stylesheet" type="text/css" />
+<![endif]-->
+<!--[if !IE 7]>
+<style type="text/css">
+  #wrap {display:table;height:100%}
+</style>
+<![endif]-->
+<%= csrf_meta_tags %>
+
+<!-- Uncomment if you are specifically targeting less enabled mobile browsers
+<link rel="stylesheet" media="handheld" href="css/handheld.css?v=2">  -->
+
+<!-- All JavaScript at the bottom, except for Modernizr which enables HTML5 elements & feature detects -->
+<script src="http://cloudfuji.com/javascripts/vendor/modernizr-1.6.min.js"></script>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-22212382-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+
+<body class="<%= controller.controller_name %>_<%= controller.action_name %> modal">
+  <div id="root">
+    <section id="main">
+      <div id="content">
+        <%= yield %>
       </div>
-      <%= javascript_include_tag :external_application %>
-  </body>
+    </section>
+  </div> <!-- end of #ro0t -->
+    
+<%= javascript_include_tag "application" %>  
+</body>
 </html>
