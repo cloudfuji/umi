@@ -6,7 +6,7 @@
   <%= text_field_tag "api_key", @mailgun.settings['api_key'] %>
   <%= submit_tag "Save", :class => 'button hot' %>
   <% if @mailgun.webhook_url %>
-  <br/>Use this as the mailgun webhook url: <%= link_to @mailgun.webhook_url %>
+  <br/><br/>Use this as the mailgun webhook url: <%= link_to truncate(@mailgun.webhook_url, :length => 90), @mailgun.webhook_url %>
   <% end %>
 <% end %>
 <br/>
@@ -20,7 +20,7 @@
     | <%= link_to "Initial Import (may take awhile)", "/pivotal/import"  %>
   <% end %>
   <% if @pivotal.webhook_url %>
-  <br/>Use this as the Pivotal webhook url: <%= link_to @pivotal.webhook_url %>
+  <br/><br/>Use this as the Pivotal webhook url: <%= link_to truncate(@pivotal.webhook_url, :length => 90), @pivotal.webhook_url %>
   <% end %>
 <% end %>
 <br/>
@@ -31,7 +31,7 @@
   <%= text_field_tag "api_key", @wufoo.settings['api_key'] %>
   <%= submit_tag "Save", :class => 'button hot' %>
   <% if @wufoo.webhook_url %>
-  <br/>Use this as the Wufoo webhook url: <%= link_to @wufoo.webhook_url %>
+  <br/><br/>Use this as the Wufoo webhook url: <%= link_to truncate(@wufoo.webhook_url, :length => 90), @wufoo.webhook_url %>
   <% end %>
 
 <% end %>
@@ -43,7 +43,7 @@
   <%= text_field_tag "api_key", @stripe.settings['api_key'] %>
   <%= submit_tag "Save", :class => 'button hot' %>
   <% if @stripe.webhook_url %>
-  <br/>Use this as the Stripe webhook url: <%= link_to @stripe.webhook_url %>
+  <br/><br/>Use this as the Stripe webhook url: <%= link_to truncate(@stripe.webhook_url, :length => 90), @stripe.webhook_url %>
   <% end %>
 <% end %>
 <br/>
@@ -82,14 +82,25 @@
   <% end %>
 
   <% if @mailchimp.webhook_url %>
-  <br/>Use this as the Mailchimp webhook url: <%= link_to @mailchimp.webhook_url %>
+  <br/>Use this as the Mailchimp webhook url: <%= link_to truncate(@mailchimp.webhook_url, :length => 90), @mailchimp.webhook_url %>
   <% end %>
+<% end %>
+<br/>
+
+<%= form_tag "/accounts" do %>
+  <%= label_tag "Gmail" %>
+  <%= hidden_field_tag 'name', "gmail" %>
+  Email:
+  <%= text_field_tag "email", @gmail.settings['email'] %>
+  Password:
+  <%= password_field_tag "password", @gmail.settings['password'] %>
+  <%= submit_tag "Save", :class => 'button hot' %>
 <% end %>
 <br/>
 
 <p>
   <% if @github.webhook_url %>
-  <br/>Use this as the GitHub webhook url: <%= link_to @github.webhook_url %>
+  <br/>Use this as the GitHub webhook url: <%= link_to truncate(@github.webhook_url, :length => 90), @github.webhook_url %>
   <% end %>
 </p>
 

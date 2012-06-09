@@ -10,16 +10,19 @@ class AccountsController < ApplicationController
       puts "errors: #{@auth_token.errors.inspect}"
     end
 
-    %w(pivotal mailgun wufoo stripe github mailchimp).each do |service|
+    %w(pivotal mailgun wufoo stripe github mailchimp gmail).each do |service|
       instance_variable_set("@#{service}", current_user.settings_for(service))
     end
   end
 
   def create
     config = current_user.settings.find_or_create_by(:name => params[:name])
-    if params[:api_key].present?
-      config.settings['api_key'] = params[:api_key]
+    if %w(api_key password).any? { |f| params[f].present? }
+      %w(api_key email password).each do |field|
+        config.settings[field] = params[field] if params[field].present?
+      end
       config.settings['human_name'] = params[:name]
+
       config.auth_token ||= current_user.auth_tokens.create!(:name => params[:name], :description => params[:name])
     else
       # Delete settings and auth token if api_key is blank
