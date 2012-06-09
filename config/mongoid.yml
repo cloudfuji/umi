@@ -2,7 +2,8 @@
 # ============================================
 
 development:
-  uri: <%= ENV['MONGODB_URL'] %>
+  host: localhost
+  database: sade_development
 
 production:
   uri: <%= ENV['MONGODB_URL'] %>
