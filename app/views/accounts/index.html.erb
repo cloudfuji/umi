@@ -87,13 +87,37 @@
 <% end %>
 <br/>
 
-<%= form_tag "/accounts" do %>
+<%= form_tag "/imap_accounts" do %>
   <%= label_tag "Gmail" %>
-  <%= hidden_field_tag 'name', "gmail" %>
-  Email:
-  <%= text_field_tag "email", @gmail.settings['email'] %>
-  Password:
-  <%= password_field_tag "password", @gmail.settings['password'] %>
+  <% if @imap_accounts.any? %>
+    <p>Existing Accounts:</p>
+    <ul>
+    <% @imap_accounts.each do |account| %>
+      <li>
+      <%= account.server %>:<%= account.port %> |
+      <%= account.email %> |
+      Inbox folder: "<%= account.inbox_folder %>" |
+      Sent folder: "<%= account.sent_mail_folder %>" |
+      <%= link_to 'Delete?', imap_account_path(account.id), :method => :delete, :"data-confirm" => "Are you sure?" %>
+      </li>
+    <% end %>
+    </ul>
+    <br/>
+  <% end %>
+  <%= fields_for 'imap' do |f| %>
+    <%= f.hidden_field 'server', :value => "imap.gmail.com" %>
+    <%= f.hidden_field 'ssl', :value => "true" %>
+    <%= f.hidden_field 'port', :value => "993" %>
+    <%= f.hidden_field 'inbox_folder', :value => "Inbox" %>
+    <%= f.hidden_field 'sent_mail_folder', :value => "[Gmail]/Sent Mail" %>
+    
+    <p>Add new account:</p>
+    
+    Email:
+    <%= f.text_field "email" %>
+    Password:
+    <%= f.password_field "password" %>
+  <% end %>
   <%= submit_tag "Save", :class => 'button hot' %>
 <% end %>
 <br/>

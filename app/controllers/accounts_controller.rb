@@ -10,18 +10,23 @@ class AccountsController < ApplicationController
       puts "errors: #{@auth_token.errors.inspect}"
     end
 
-    %w(pivotal mailgun wufoo stripe github mailchimp gmail).each do |service|
+    %w(pivotal mailgun wufoo stripe github mailchimp).each do |service|
       instance_variable_set("@#{service}", current_user.settings_for(service))
     end
+
+    @imap_accounts = IMAPAccount.where(:user_id => current_user.id).all
   end
 
   def create
     config = current_user.settings.find_or_create_by(:name => params[:name])
-    if %w(api_key password).any? { |f| params[f].present? }
-      %w(api_key email password).each do |field|
-        config.settings[field] = params[field] if params[field].present?
-      end
-      config.settings['human_name'] = params[:name]
+    if params['api_key'].present? || params['imap'] && params['imap']['password'].present?
+
+      config.settings = params[params[:name]] if params[params[:name]]
+
+      config.settings['api_key'] = params['api_key'] if params['api_key'].present?
+      config.settings['human_name'] = params[:human_name] || params[:name]
+      # Set data hash from name, if present (ie.g. 'imap')
+
 
       config.auth_token ||= current_user.auth_tokens.create!(:name => params[:name], :description => params[:name])
     else
@@ -33,7 +38,7 @@ class AccountsController < ApplicationController
 
     puts "Config: #{config.inspect}"
 
-    flash[:notice] = "Ok, updated #{config.name}!"
+    flash[:notice] = "Ok, updated #{config.settings['human_name']}!"
     puts "Config: #{config.inspect}"
     puts "Config: #{config.errors.inspect}"
 
