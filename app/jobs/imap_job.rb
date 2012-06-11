@@ -37,8 +37,7 @@ module IMAPJob
         puts "There are (#{email_uids.size}) new emails to fire as events..."
         email_uids.each do |uid|
           # Fetch email data, PEEK ensures that unseen messages are not marked as read.
-          imap_data = imap.uid_fetch(uid, ['BODY.PEEK[]', 'FLAGS']).first.attr
-          flags = imap_data["FLAGS"]
+          imap_data = imap.uid_fetch(uid, 'BODY.PEEK[]').first.attr
           email = Mail.new imap_data["BODY[]"]        
 
           event = {
