@@ -57,7 +57,7 @@ group :development, :test do
   gem "rspec-rails", :group => "development"
   gem "awesome_print", :group => "development"
   unless ENV["CI"]
-    gem 'ruby-debug', :platform => :mri_18
-    gem (RUBY_VERSION == "1.9.2" ? 'ruby-debug19' : 'debugger'), :platform => :mri_19
+    # gem 'ruby-debug', :platform => :mri_18
+    # gem (RUBY_VERSION == "1.9.2" ? 'ruby-debug19' : 'debugger'), :platform => :mri_19
   end
 end
