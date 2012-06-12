@@ -38,20 +38,21 @@ module IMAPJob
         email_uids.each do |uid|
           # Fetch email data, PEEK ensures that unseen messages are not marked as read.
           imap_data = imap.uid_fetch(uid, 'BODY.PEEK[]').first.attr
-          email = Mail.new imap_data["BODY[]"]        
+          email = Mail.new imap_data["BODY[]"] 
 
           event = {
             :category => 'email',
             :name     => event_name,
             :data     => {
               :uid        => uid,
-              :user_email => imap_account.email,
+              :folder     => folder,
+              :account    => imap_account.email,
               :to         => email.to.join(';'),
               :from       => email.from.join(';'),
               :cc         => email.cc,
               :date       => email.date,
               :subject    => email.subject,
-              :body       => email.body.to_s
+              :rfc822     => imap_data["BODY[]"]
             }
           }
 
