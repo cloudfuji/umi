@@ -24,6 +24,9 @@ development:
 test:
   <<: *defaults
   database: sade_test
+  host: localhost
+  database: sade_development
+
 
 # set these environment variables on your prod server
 production:
