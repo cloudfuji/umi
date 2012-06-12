@@ -6,7 +6,7 @@ begin
 rescue LoadError
 end
 
-gem 'rails', '3.2.0'
+gem 'rails', '~> 3.2.6'
 
 # Mongo gems
 gem 'mongoid', '~> 2.2.2'
