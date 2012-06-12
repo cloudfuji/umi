@@ -1,0 +1,3 @@
+development: localhost:6379
+test: localhost:6379
+production: redis.cloudfuji.com:6379

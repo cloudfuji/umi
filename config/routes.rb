@@ -25,8 +25,9 @@ Umi::Application.routes.draw do
   match "/pivotal/received"        => 'pivotal#received',           :via => :post
   match "/pivotal/import"          => 'pivotal#import',             :via => :get
 
-  resources(:auth_tokens)
-  resource(:accounts)
-
+  resources :auth_tokens 
+  resource  :accounts 
+  resources :imap_accounts, :only => [:create, :destroy]
+  
   match '/' => 'accounts#index', :as => "root"
 end

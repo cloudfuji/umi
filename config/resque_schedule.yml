@@ -1,0 +1,7 @@
+imap_job_queuing:
+  cron: "* * * * *"
+  queue: job_queuing
+  class: IMAPQueuingJob
+  args:
+    job_interval: 5
+  description: Meta-job responsible for queuing IMAP processing jobs
