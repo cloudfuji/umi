@@ -44,13 +44,14 @@ module IMAPJob
             :category => 'email',
             :name     => event_name,
             :data     => {
-              :uid     => uid,
-              :to      => email.to.join(';'),
-              :from    => email.from.join(';'),
-              :cc      => email.cc,
-              :date    => email.date,
-              :subject => email.subject,
-              :body    => email.body.to_s
+              :uid        => uid,
+              :user_email => imap_account.email,
+              :to         => email.to.join(';'),
+              :from       => email.from.join(';'),
+              :cc         => email.cc,
+              :date       => email.date,
+              :subject    => email.subject,
+              :body       => email.body.to_s
             }
           }
 
