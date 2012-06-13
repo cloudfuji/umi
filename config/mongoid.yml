@@ -1,9 +1,0 @@
-# Mongoid Configuration for MongoHQ on cloudfuji
-# ============================================
-
-development:
-  host: localhost
-  database: sade_development
-
-production:
-  uri: <%= ENV['MONGODB_URL'] %>

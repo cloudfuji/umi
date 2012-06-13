@@ -4,7 +4,7 @@
   <%= label_tag "Mailgun" %>
   <%= hidden_field_tag 'name', "mailgun" %>
   <%= text_field_tag "api_key", @mailgun.settings['api_key'] %>
-  <%= submit_tag "Save", :class => 'button hot' %>
+  <%= submit_tag "Save", :class => 'button fat hot' %>
   <% if @mailgun.webhook_url %>
   <br/><br/>Use this as the mailgun webhook url: <%= link_to truncate(@mailgun.webhook_url, :length => 90), @mailgun.webhook_url %>
   <% end %>
@@ -15,7 +15,7 @@
   <%= label_tag "Pivotal" %>
   <%= hidden_field_tag 'name', "pivotal" %>
   <%= text_field_tag "api_key", @pivotal.settings['api_key'] %>
-  <%= submit_tag "Save", :class => 'button hot' %>
+  <%= submit_tag "Save", :class => 'button fat hot' %>
   <% if @pivotal.settings['api_key'].present? %>
     | <%= link_to "Initial Import (may take awhile)", "/pivotal/import"  %>
   <% end %>
@@ -29,7 +29,7 @@
   <%= label_tag "Wufoo" %>
   <%= hidden_field_tag 'name', "wufoo" %>
   <%= text_field_tag "api_key", @wufoo.settings['api_key'] %>
-  <%= submit_tag "Save", :class => 'button hot' %>
+  <%= submit_tag "Save", :class => 'button fat hot' %>
   <% if @wufoo.webhook_url %>
   <br/><br/>Use this as the Wufoo webhook url: <%= link_to truncate(@wufoo.webhook_url, :length => 90), @wufoo.webhook_url %>
   <% end %>
@@ -41,7 +41,7 @@
   <%= label_tag "Stripe" %>
   <%= hidden_field_tag 'name', "stripe" %>
   <%= text_field_tag "api_key", @stripe.settings['api_key'] %>
-  <%= submit_tag "Save", :class => 'button hot' %>
+  <%= submit_tag "Save", :class => 'button fat hot' %>
   <% if @stripe.webhook_url %>
   <br/><br/>Use this as the Stripe webhook url: <%= link_to truncate(@stripe.webhook_url, :length => 90), @stripe.webhook_url %>
   <% end %>
@@ -52,7 +52,7 @@
   <%= label_tag "Mailchimp" %>
   <%= hidden_field_tag 'name', "mailchimp" %>
   <%= text_field_tag "api_key", @mailchimp.settings['api_key'] %>
-  <%= submit_tag "Save", :class => 'button hot' %>
+  <%= submit_tag "Save", :class => 'button fat hot' %>
   <% if @mailchimp.settings['api_key'].present? %>
     | <%= link_to "Refresh cached Lists, Groupings & Groups", "/mailchimp/refresh_lists"  %>
   <% end %>
@@ -118,7 +118,7 @@
     Password:
     <%= f.password_field "password" %>
   <% end %>
-  <%= submit_tag "Save", :class => 'button hot' %>
+  <%= submit_tag "Save", :class => 'button fat hot' %>
 <% end %>
 <br/>
 
