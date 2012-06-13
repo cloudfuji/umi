@@ -38,7 +38,9 @@ module ImapJob
         email_uids.each do |uid|
           # Fetch email data, PEEK ensures that unseen messages are not marked as read.
           imap_data = imap.uid_fetch(uid, 'BODY.PEEK[]').first.attr
-          email = Mail.new imap_data["BODY[]"] 
+          email = Mail.new imap_data["BODY[]"]
+
+          next if email.nil? # Why would email be nil?
 
           event = {
             :category => 'email',
