@@ -1,4 +1,4 @@
-module IMAPJob
+module ImapJob
   @queue = :account_polling
 
   class << self

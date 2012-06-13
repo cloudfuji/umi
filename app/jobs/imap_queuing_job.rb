@@ -1,4 +1,4 @@
-module IMAPQueuingJob
+module ImapQueuingJob
   @queue = :job_queuing
 
   class << self
