@@ -40,7 +40,7 @@ module ImapJob
           imap_data = imap.uid_fetch(uid, 'BODY.PEEK[]').first.attr
           email = Mail.new imap_data["BODY[]"]
 
-          next if email.nil? # Why would email be nil?
+          next if email.to.nil? || email.from.nil? # Why would email.to be nil?
 
           event = {
             :category => 'email',
