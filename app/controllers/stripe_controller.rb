@@ -171,7 +171,7 @@ class StripeController < ApplicationController
     }
   end
 
-  def transfer
+  def transfer(event)
     data           = event[:data]
     transfer       = data[:object]
     category, name = event[:type].split(".")
