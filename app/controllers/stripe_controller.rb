@@ -180,7 +180,7 @@ class StripeController < ApplicationController
     {
       :category => category,
       :name => name,
-      :data => plan.merge({:human => human})
+      :data => transfer.merge({:human => human})
     }
 
   end
