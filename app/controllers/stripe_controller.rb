@@ -170,5 +170,19 @@ class StripeController < ApplicationController
       :data => plan.merge({:human => human})
     }
   end
+
+  def transfer(event)
+    data           = event[:data]
+    transfer       = data[:object]
+    category, name = event[:type].split(".")
+    human          = "#{category.titleize} #{name.upcase} (#{transfer[:status]}) for #{transfer[:amount] / 100.0 }"
+
+    {
+      :category => category,
+      :name => name,
+      :data => transfer.merge({:human => human})
+    }
+
+  end
 end
 

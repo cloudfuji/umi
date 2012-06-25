@@ -1,4 +1,4 @@
-module IMAPJob
+module ImapJob
   @queue = :account_polling
 
   class << self
@@ -38,7 +38,9 @@ module IMAPJob
         email_uids.each do |uid|
           # Fetch email data, PEEK ensures that unseen messages are not marked as read.
           imap_data = imap.uid_fetch(uid, 'BODY.PEEK[]').first.attr
-          email = Mail.new imap_data["BODY[]"] 
+          email = Mail.new imap_data["BODY[]"]
+
+          next if email.to.nil? || email.from.nil? # Why would email.to be nil?
 
           event = {
             :category => 'email',
