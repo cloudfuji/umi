@@ -19,10 +19,15 @@ var IdoShare = (function(){
       ,true_api = {
 	  push: push
       }
+      ,identity = (getCookie('idoShareId') == 'undefined') ? 'undefined' : getCookie('idoShareId')
       ;  
 
 
   function push(event_obj){
+      if(typeof identity != 'undefined' && typeof identity != null){
+	  event_obj.identity = identity;
+      }
+
       var tag = document.createElement("script");
       tag.type = "text/javascript"; 
       tag.async = true;
@@ -30,6 +35,34 @@ var IdoShare = (function(){
       tag.src = protocol + endpoint_url+"?umi_token="+auth_token+"&event="+encodeURIComponent(JSON.stringify(event_obj));
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(tag, s);
+  }
+
+    function setCookie(c_name,value,exdays){
+	var exdate=new Date();
+	exdate.setDate(exdate.getDate() + exdays);
+	var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+	document.cookie=c_name + "=" + c_value;
+    }
+
+    function getCookie(c_name) {
+	var x
+	    ,y
+	    ,ARRcookies=document.cookie.split(";")
+	    ;
+
+	for (var i=0; i<ARRcookies.length; i++) {
+	    x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+	    y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+	    x=x.replace(/^\s+|\s+$/g,"");
+	    if (x==c_name)  {
+		return unescape(y);
+	    }
+	}
+    }
+
+  function identify(uuid){
+      setCookie(idoShareId, uuid);
+      identity = uuid;
   }
 
   
@@ -80,11 +113,22 @@ var IdoShare = (function(){
 		,name: arguments[0]
 		,data : arguments[1]
 	    };
-
 	    if(api_inaction = true){
 		push(ido_event);
             }else{
 		async_log.push(['push', ido_event]);
+	    }
+	    old_meth.apply(window.mixpanel, arguments);
+        }
+    }
+
+    if(typeof mp_api.identify != 'undefined'){
+	var old_meth = mp_api.identify;
+	mp_api.identify = function(){
+	    if(api_inaction = true){
+		push(arguments);
+	    }else{
+		async_log.push(['identify', arguments]);
 	    }
 	    old_meth.apply(window.mixpanel, arguments);
         }
